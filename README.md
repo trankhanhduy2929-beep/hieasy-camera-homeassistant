@@ -14,9 +14,11 @@ Custom integration cho camera Visioncop/HiEasy (APK `HiEasy 8.1.2`, package
 Home Assistant tự lấy danh sách thiết bị, tìm camera trong LAN và dùng RTSP
 qua CGI proprietary hoặc ONVIF.
 
-> **Trạng thái 0.2.1:** đã triển khai cloud login, tự dò LAN, IP/hostname thủ
+> **Trạng thái 0.3.0:** đã triển khai cloud login, tự dò LAN, IP/hostname thủ
 > công, WS-Discovery, HTTP Basic/Digest, CGI RTSP, ONVIF và probe RTSP trực
-> tiếp có giới hạn. Chưa có P2P trực tiếp qua PPCS native của Android.
+> tiếp có giới hạn. Toàn bộ endpoint setting của APK (detection AI, báo động,
+> đèn, PTZ, lưu trữ, mạng, nguồn, thời gian) được poll và điều khiển qua
+> entity hoặc service. Chưa có P2P trực tiếp qua PPCS native của Android.
 
 ## Cài bằng HACS
 
@@ -47,15 +49,30 @@ Mỗi thiết bị trong tài khoản được tạo thành một device Home As
 
 - `camera`: ba profile cho mỗi kênh (`main`, `sub`, `third`); entity chỉ hoạt
   động khi tìm được RTSP URI.
-- `binary_sensor`: online, kết nối LAN, hỗ trợ PTZ, motion detection enabled.
-- `sensor`: model, firmware, serial, MAC, DID metadata, số kênh, IP LAN, cổng
-  command/media, transport, pin và tín hiệu. Sensor timestamp phản hồi đã bị
-  xóa để không tạo lịch sử liên tục trong Recorder.
-- `switch`: đèn báo, đèn trắng/light control, alarm output và motion detection
-  theo kênh khi CGI tương ứng được camera hỗ trợ.
-- `select`: `NightVisionMode` (giữ cả giá trị vendor-specific hiện tại).
-- `button`: dò lại LAN và reboot (reboot là thao tác nguy hiểm, chỉ khả dụng
-  khi camera được tìm thấy trong LAN).
+- `binary_sensor`: online, kết nối LAN, hỗ trợ PTZ, đang ngủ, alarm output
+  active, còi/đèn đang kêu, thẻ nhớ, SIM, pin yếu, ghi cloud.
+- `sensor`: model, firmware, serial, MAC, device type, số kênh, IP LAN, cổng
+  command/media, transport, pin (cloud + local), tín hiệu Wi-Fi/SIM, SSID,
+  nhà mạng SIM, điện áp/trạng thái nguồn, dung lượng thẻ nhớ, thời gian còi
+  còn lại, chất lượng không khí, thống kê báo động/người/thức/xem hôm nay.
+- `switch` (device): đèn báo, đèn trắng/light control, đèn trang trí, đèn đêm,
+  alarm output, không làm phiền, báo động cảm biến khí, phát hiện khóc/la, bám
+  mục tiêu thông minh, phát hiện lửa, phát hiện xe điện.
+- `switch` (per-channel): phát hiện chuyển động, bám chuyển động, phát hiện
+  người, xe, động vật, PIR, radar, đèn cảnh báo, còi báo, báo động một chạm,
+  lịch ghi hình.
+- `select`: night vision mode, chế độ đàm thoại, chế độ nguồn, chế độ đèn
+  trang trí/điều khiển đèn, IR-cut mode/scene, lật ảnh, giao thức PTZ, chế độ
+  canh PTZ, kiểu ghi hình.
+- `number`: thời gian không làm phiền, thời gian đèn đêm, âm lượng báo
+  động/mic/loa, độ sáng đèn bù/đèn có người/không người, ngưỡng pin yếu, độ
+  nhạy chuyển động/người/PIR/radar/IR-cut, giảm nhiễu, độ trễ cảnh báo, thời
+  gian báo động, chu kỳ push.
+- `button` (device): dò lại LAN, reboot, ép keyframe, báo động một chạm, dừng
+  còi, ngủ/đánh thức, đồng bộ giờ, format thẻ nhớ, nút gọi.
+- `button` (per-channel): reset PTZ, reset lens, hiệu chuẩn PTZ, về điểm canh
+  chủ, bắt đầu/dừng tuần tra, quỹ đạo tuần tra, bám người, quét ngang, quét
+  360, quỹ đạo, gạt mưa, sưởi.
 
 Các entity setting được tạo theo kiểu best-effort: firmware Visioncop có nhiều
 biến thể, vì vậy entity có thể ở trạng thái unavailable nếu endpoint không tồn
@@ -105,6 +122,66 @@ data:
   did: "DID_CUA_CAMERA"
   channel: 1
   preset: 3
+```
+
+### `hieasy.ptz_control`
+
+Chạy mọi hành động PTZ có trong APK:
+
+```yaml
+action: hieasy.ptz_control
+data:
+  did: "DID_CUA_CAMERA"
+  channel: 1
+  action: human_track_start   # hoặc cruise_start, range_scan360_start, watch_start...
+  preset: 3                    # chỉ cần cho preset_set/preset_remove/watch_start/watch_stop
+```
+
+Danh sách `action`: `preset_set`, `preset_remove`, `ptz_reset`, `lens_reset`,
+`calibration`, `cruise_start`, `cruise_stop`, `cruise_track_start`,
+`cruise_track_stop`, `human_track_start`, `human_track_stop`,
+`range_scan_start`, `range_scan_stop`, `range_scan_left`, `range_scan_right`,
+`range_scan360_start`, `range_scan360_stop`, `track_start`, `track_stop`,
+`track_mem_start`, `track_mem_stop`, `watch_start`, `watch_stop`,
+`watch_care_goto`, `wiper`, `heater`.
+
+### `hieasy.one_click_alarm` / `hieasy.audio_alarm_stop` / `hieasy.alarm_output`
+
+```yaml
+action: hieasy.one_click_alarm
+data: {did: "DID", channel: 1}
+
+action: hieasy.audio_alarm_stop
+data: {did: "DID", channel: 1}
+
+action: hieasy.alarm_output
+data: {did: "DID", channel: 1, action: on}   # on/off relay báo động
+```
+
+### `hieasy.sleep_control` / `hieasy.sync_time` / `hieasy.force_iframe` / `hieasy.format_sdcard`
+
+```yaml
+action: hieasy.sleep_control
+data: {did: "DID", action: sleep}   # hoặc wake
+
+action: hieasy.sync_time
+data: {did: "DID"}                  # ghi giờ hệ thống HA vào camera
+
+action: hieasy.force_iframe
+data: {did: "DID", channel: 1}
+
+action: hieasy.format_sdcard
+data: {did: "DID"}                  # format thẻ nhớ — mất toàn bộ bản ghi
+```
+
+### `hieasy.set_osd_text`
+
+```yaml
+action: hieasy.set_osd_text
+data:
+  did: "DID_CUA_CAMERA"
+  channel: 1
+  text: "Camera sân vườn"
 ```
 
 DID có thể xem trong diagnostics hoặc thuộc tính device. Nếu có nhiều config

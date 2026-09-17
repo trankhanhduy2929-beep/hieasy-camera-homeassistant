@@ -39,6 +39,397 @@
       }
     }
   },
+  "entity": {
+    "binary_sensor": {
+      "alarm_out_state": {
+        "name": "Đầu ra báo động"
+      },
+      "cloud_recording": {
+        "name": "Ghi cloud"
+      },
+      "local_connection": {
+        "name": "Kết nối nội bộ"
+      },
+      "low_battery": {
+        "name": "Pin yếu"
+      },
+      "motion_enabled": {
+        "name": "Phát hiện chuyển động kênh {channel}"
+      },
+      "online": {
+        "name": "Trực tuyến"
+      },
+      "ptz_supported": {
+        "name": "Hỗ trợ PTZ"
+      },
+      "sdcard_present": {
+        "name": "Có thẻ nhớ"
+      },
+      "sim_present": {
+        "name": "Có SIM"
+      },
+      "sleeping": {
+        "name": "Đang ngủ"
+      },
+      "voice_light_active": {
+        "name": "Còi/đèn đang kêu"
+      }
+    },
+    "button": {
+      "audio_alarm_stop": {
+        "name": "Dừng còi báo động"
+      },
+      "cruise_start": {
+        "name": "Kênh {channel} bắt đầu tuần tra"
+      },
+      "cruise_stop": {
+        "name": "Kênh {channel} dừng tuần tra"
+      },
+      "cruise_track_start": {
+        "name": "Kênh {channel} bắt đầu quỹ đạo tuần tra"
+      },
+      "cruise_track_stop": {
+        "name": "Kênh {channel} dừng quỹ đạo tuần tra"
+      },
+      "force_iframe": {
+        "name": "Ép keyframe"
+      },
+      "format_sdcard": {
+        "name": "Format thẻ nhớ"
+      },
+      "heater": {
+        "name": "Kênh {channel} sưởi chống mờ"
+      },
+      "human_track_start": {
+        "name": "Kênh {channel} bật bám người"
+      },
+      "human_track_stop": {
+        "name": "Kênh {channel} tắt bám người"
+      },
+      "lens_reset": {
+        "name": "Kênh {channel} reset lens"
+      },
+      "one_button_call": {
+        "name": "Nút gọi trên thiết bị"
+      },
+      "one_click_alarm": {
+        "name": "Kích hoạt báo động một chạm"
+      },
+      "ptz_calibration": {
+        "name": "Kênh {channel} hiệu chuẩn PTZ"
+      },
+      "ptz_reset": {
+        "name": "Kênh {channel} reset PTZ"
+      },
+      "range_scan360_start": {
+        "name": "Kênh {channel} bắt đầu quét 360"
+      },
+      "range_scan360_stop": {
+        "name": "Kênh {channel} dừng quét 360"
+      },
+      "range_scan_start": {
+        "name": "Kênh {channel} bắt đầu quét ngang"
+      },
+      "range_scan_stop": {
+        "name": "Kênh {channel} dừng quét ngang"
+      },
+      "reboot": {
+        "name": "Khởi động lại"
+      },
+      "rediscover": {
+        "name": "Dò lại LAN"
+      },
+      "sleep": {
+        "name": "Ngủ"
+      },
+      "sync_time": {
+        "name": "Đồng bộ giờ từ HA"
+      },
+      "track_start": {
+        "name": "Kênh {channel} bắt đầu quỹ đạo"
+      },
+      "track_stop": {
+        "name": "Kênh {channel} dừng quỹ đạo"
+      },
+      "wake": {
+        "name": "Đánh thức"
+      },
+      "watch_care_goto": {
+        "name": "Kênh {channel} về điểm canh chủ"
+      },
+      "wiper": {
+        "name": "Kênh {channel} gạt mưa"
+      }
+    },
+    "camera": {
+      "stream": {
+        "name": "Kênh {channel} luồng {profile}"
+      }
+    },
+    "number": {
+      "alarm_volume": {
+        "name": "Âm lượng báo động"
+      },
+      "atmosphere_light_mode": {
+        "name": "Giá trị chế độ đèn trang trí"
+      },
+      "dnd_duration": {
+        "name": "Thời gian không làm phiền"
+      },
+      "fill_light_brightness": {
+        "name": "Độ sáng đèn bù"
+      },
+      "image_noise_reduce": {
+        "name": "Kênh {channel} giảm nhiễu"
+      },
+      "ircut_sensitivity": {
+        "name": "Kênh {channel} độ nhạy IR-cut"
+      },
+      "light_brightness_idle": {
+        "name": "Độ sáng đèn (không người)"
+      },
+      "light_brightness_person": {
+        "name": "Độ sáng đèn (có người)"
+      },
+      "light_warning_delay": {
+        "name": "Kênh {channel} độ trễ đèn cảnh báo"
+      },
+      "low_battery_percent": {
+        "name": "Ngưỡng pin yếu"
+      },
+      "mic_volume": {
+        "name": "Âm lượng mic"
+      },
+      "motion_sensitivity": {
+        "name": "Kênh {channel} độ nhạy chuyển động"
+      },
+      "night_led_duration": {
+        "name": "Thời gian đèn đêm"
+      },
+      "one_click_alarm_time": {
+        "name": "Kênh {channel} thời gian báo động một chạm"
+      },
+      "people_sensitivity": {
+        "name": "Kênh {channel} độ nhạy người"
+      },
+      "pir_sensitivity": {
+        "name": "Kênh {channel} độ nhạy PIR"
+      },
+      "push_interval_motion": {
+        "name": "Kênh {channel} chu kỳ push chuyển động"
+      },
+      "push_interval_people": {
+        "name": "Kênh {channel} chu kỳ push người"
+      },
+      "radar_sensitivity": {
+        "name": "Kênh {channel} độ nhạy radar"
+      },
+      "speaker_volume": {
+        "name": "Âm lượng loa"
+      },
+      "voice_light_alarm_time": {
+        "name": "Kênh {channel} thời gian còi báo"
+      }
+    },
+    "select": {
+      "atmosphere_light_mode": {
+        "name": "Chế độ đèn trang trí"
+      },
+      "flip_mode": {
+        "name": "Kênh {channel} lật ảnh"
+      },
+      "intercom_mode": {
+        "name": "Chế độ đàm thoại"
+      },
+      "ircut_mode": {
+        "name": "Kênh {channel} chế độ IR-cut"
+      },
+      "ircut_scene": {
+        "name": "Kênh {channel} bối cảnh IR-cut"
+      },
+      "light_mode": {
+        "name": "Chế độ điều khiển đèn"
+      },
+      "night_vision_mode": {
+        "name": "Chế độ nhìn đêm"
+      },
+      "power_mode": {
+        "name": "Chế độ nguồn"
+      },
+      "ptz_protocol": {
+        "name": "Kênh {channel} giao thức PTZ"
+      },
+      "ptz_watch_mode": {
+        "name": "Kênh {channel} chế độ canh PTZ"
+      },
+      "record_type": {
+        "name": "Kênh {channel} kiểu ghi hình"
+      }
+    },
+    "sensor": {
+      "air_quality": {
+        "name": "Chất lượng không khí"
+      },
+      "alarm_count_today": {
+        "name": "Số báo động hôm nay"
+      },
+      "awaken_duration": {
+        "name": "Thời gian thức"
+      },
+      "battery": {
+        "name": "Pin"
+      },
+      "battery_percent_local": {
+        "name": "Pin (local)"
+      },
+      "channel_count": {
+        "name": "Số kênh"
+      },
+      "cloud_status": {
+        "name": "Trạng thái cloud"
+      },
+      "command_port": {
+        "name": "Cổng điều khiển"
+      },
+      "device_type": {
+        "name": "Loại thiết bị"
+      },
+      "firmware": {
+        "name": "Firmware"
+      },
+      "iccid": {
+        "name": "ICCID SIM"
+      },
+      "local_ip": {
+        "name": "IP nội bộ"
+      },
+      "mac": {
+        "name": "Địa chỉ MAC"
+      },
+      "media_port": {
+        "name": "Cổng media"
+      },
+      "model": {
+        "name": "Model"
+      },
+      "people_count_today": {
+        "name": "Số người phát hiện hôm nay"
+      },
+      "power_status": {
+        "name": "Trạng thái nguồn"
+      },
+      "power_voltage": {
+        "name": "Điện áp nguồn"
+      },
+      "preview_duration": {
+        "name": "Thời gian xem"
+      },
+      "sdcard_format_status": {
+        "name": "Trạng thái format thẻ"
+      },
+      "sdcard_free": {
+        "name": "Dung lượng trống thẻ"
+      },
+      "sdcard_total": {
+        "name": "Dung lượng thẻ"
+      },
+      "serial": {
+        "name": "Số serial"
+      },
+      "signal": {
+        "name": "Tín hiệu"
+      },
+      "sim_operator": {
+        "name": "Nhà mạng SIM"
+      },
+      "sim_signal": {
+        "name": "Sóng SIM"
+      },
+      "transport": {
+        "name": "Kiểu truyền video"
+      },
+      "voice_light_remaining": {
+        "name": "Thời gian còi còn lại"
+      },
+      "wifi_signal": {
+        "name": "Sóng Wi-Fi"
+      },
+      "wifi_ssid": {
+        "name": "SSID Wi-Fi"
+      }
+    },
+    "switch": {
+      "alarm_output": {
+        "name": "Ngõ ra báo động"
+      },
+      "animal_detect": {
+        "name": "Kênh {channel} phát hiện động vật"
+      },
+      "ari_dect_alarm": {
+        "name": "Báo động cảm biến khí"
+      },
+      "atmosphere_light": {
+        "name": "Đèn trang trí"
+      },
+      "car_detect": {
+        "name": "Kênh {channel} phát hiện xe"
+      },
+      "cry_detect": {
+        "name": "Phát hiện khóc/la"
+      },
+      "do_not_disturb": {
+        "name": "Không làm phiền"
+      },
+      "ebike_detect": {
+        "name": "Phát hiện xe điện"
+      },
+      "fire_detect": {
+        "name": "Phát hiện lửa"
+      },
+      "indicator_light": {
+        "name": "Đèn báo trạng thái"
+      },
+      "intelligent_track": {
+        "name": "Bám mục tiêu thông minh"
+      },
+      "light_control": {
+        "name": "Đèn trắng"
+      },
+      "light_warning": {
+        "name": "Kênh {channel} đèn cảnh báo"
+      },
+      "motion": {
+        "name": "Phát hiện chuyển động kênh {channel}"
+      },
+      "move_track": {
+        "name": "Kênh {channel} bám chuyển động"
+      },
+      "night_led": {
+        "name": "Đèn đêm"
+      },
+      "one_click_alarm": {
+        "name": "Kênh {channel} báo động một chạm"
+      },
+      "people_detect": {
+        "name": "Kênh {channel} phát hiện người"
+      },
+      "pir_detect": {
+        "name": "Kênh {channel} phát hiện PIR"
+      },
+      "radar_detect": {
+        "name": "Kênh {channel} phát hiện radar"
+      },
+      "record_schedule": {
+        "name": "Kênh {channel} lịch ghi hình"
+      },
+      "voice_light": {
+        "name": "Kênh {channel} còi báo"
+      },
+      "white_light": {
+        "name": "Đèn trắng"
+      }
+    }
+  },
   "options": {
     "step": {
       "init": {
@@ -80,156 +471,234 @@
       }
     }
   },
-  "entity": {
-    "binary_sensor": {
-      "local_connection": {
-        "name": "Kết nối nội bộ"
-      },
-      "motion_enabled": {
-        "name": "Phát hiện chuyển động kênh {channel}"
-      },
-      "online": {
-        "name": "Trực tuyến"
-      },
-      "ptz_supported": {
-        "name": "Hỗ trợ PTZ"
-      }
-    },
-    "button": {
-      "reboot": {
-        "name": "Khởi động lại"
-      },
-      "rediscover": {
-        "name": "Dò lại LAN"
-      }
-    },
-    "camera": {
-      "stream": {
-        "name": "Kênh {channel} luồng {profile}"
-      }
-    },
-    "select": {
-      "night_vision_mode": {
-        "name": "Chế độ nhìn đêm"
-      }
-    },
-    "sensor": {
-      "battery": {
-        "name": "Pin"
-      },
-      "channel_count": {
-        "name": "Số kênh"
-      },
-      "cloud_status": {
-        "name": "Trạng thái cloud"
-      },
-      "command_port": {
-        "name": "Cổng điều khiển"
-      },
-      "device_type": {
-        "name": "Loại thiết bị"
-      },
-      "firmware": {
-        "name": "Firmware"
-      },
-      "iccid": {
-        "name": "ICCID SIM"
-      },
-      "local_ip": {
-        "name": "IP nội bộ"
-      },
-      "mac": {
-        "name": "Địa chỉ MAC"
-      },
-      "media_port": {
-        "name": "Cổng media"
-      },
-      "model": {
-        "name": "Model"
-      },
-      "serial": {
-        "name": "Số serial"
-      },
-      "signal": {
-        "name": "Tín hiệu"
-      },
-      "transport": {
-        "name": "Kiểu truyền video"
-      }
-    },
-    "switch": {
-      "alarm_output": {
-        "name": "Ngõ ra báo động"
-      },
-      "indicator_light": {
-        "name": "Đèn báo trạng thái"
-      },
-      "light_control": {
-        "name": "Đèn trắng"
-      },
-      "motion": {
-        "name": "Phát hiện chuyển động kênh {channel}"
-      }
-    }
-  },
   "services": {
+    "alarm_output": {
+      "description": "Bật/tắt relay đầu ra báo động từ xa.",
+      "fields": {
+        "action": {
+          "description": "on hoặc off.",
+          "name": "Hành động"
+        },
+        "channel": {
+          "description": "Số kênh camera.",
+          "name": "Kênh"
+        },
+        "config_entry_id": {
+          "description": "Chỉ cần khi DID bị trùng giữa nhiều tài khoản.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "DID cloud, xem trong diagnostics.",
+          "name": "DID"
+        }
+      },
+      "name": "Đầu ra báo động từ xa"
+    },
+    "audio_alarm_stop": {
+      "description": "Tắt âm báo động đang phát.",
+      "fields": {
+        "channel": {
+          "description": "Số kênh camera.",
+          "name": "Kênh"
+        },
+        "config_entry_id": {
+          "description": "Chỉ cần khi DID bị trùng giữa nhiều tài khoản.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "DID cloud, xem trong diagnostics.",
+          "name": "DID"
+        }
+      },
+      "name": "Dừng còi báo động"
+    },
+    "force_iframe": {
+      "description": "Yêu cầu encoder phát keyframe ngay.",
+      "fields": {
+        "channel": {
+          "description": "Số kênh camera.",
+          "name": "Kênh"
+        },
+        "config_entry_id": {
+          "description": "Chỉ cần khi DID bị trùng giữa nhiều tài khoản.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "DID cloud, xem trong diagnostics.",
+          "name": "DID"
+        }
+      },
+      "name": "Ép keyframe"
+    },
+    "format_sdcard": {
+      "description": "Format thẻ nhớ camera. Toàn bộ bản ghi sẽ mất.",
+      "fields": {
+        "config_entry_id": {
+          "description": "Chỉ cần khi DID bị trùng giữa nhiều tài khoản.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "DID cloud, xem trong diagnostics.",
+          "name": "DID"
+        }
+      },
+      "name": "Format thẻ nhớ"
+    },
     "goto_preset": {
-      "name": "Đi tới preset PTZ",
       "description": "Di chuyển kênh PTZ tới preset bằng đúng lệnh APK HiEasy sử dụng.",
       "fields": {
         "channel": {
-          "name": "Kênh",
-          "description": "Số kênh camera."
+          "description": "Số kênh camera.",
+          "name": "Kênh"
         },
         "config_entry_id": {
-          "name": "Config entry",
-          "description": "Chỉ cần khi DID bị trùng."
+          "description": "Chỉ cần khi DID bị trùng.",
+          "name": "Config entry"
         },
         "did": {
-          "name": "DID",
-          "description": "DID cloud trong diagnostics."
+          "description": "DID cloud trong diagnostics.",
+          "name": "DID"
         },
         "preset": {
-          "name": "Preset",
-          "description": "Số preset."
+          "description": "Số preset.",
+          "name": "Preset"
         }
-      }
+      },
+      "name": "Đi tới preset PTZ"
+    },
+    "one_click_alarm": {
+      "description": "Kích hoạt tổ hợp còi/đèn/đầu ra báo động của camera.",
+      "fields": {
+        "channel": {
+          "description": "Số kênh camera.",
+          "name": "Kênh"
+        },
+        "config_entry_id": {
+          "description": "Chỉ cần khi DID bị trùng giữa nhiều tài khoản.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "DID cloud, xem trong diagnostics.",
+          "name": "DID"
+        }
+      },
+      "name": "Kích hoạt báo động một chạm"
+    },
+    "ptz_control": {
+      "description": "Chạy hành động PTZ: đặt/xóa preset, reset, hiệu chuẩn, tuần tra, bám người, quét ngang/360, quỹ đạo, canh, gạt mưa, sưởi.",
+      "fields": {
+        "action": {
+          "description": "Hành động PTZ con.",
+          "name": "Hành động"
+        },
+        "channel": {
+          "description": "Số kênh camera.",
+          "name": "Kênh"
+        },
+        "config_entry_id": {
+          "description": "Chỉ cần khi DID bị trùng giữa nhiều tài khoản.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "DID cloud, xem trong diagnostics.",
+          "name": "DID"
+        },
+        "preset": {
+          "description": "Số preset cho preset_set, preset_remove, watch_start, watch_stop.",
+          "name": "Preset"
+        }
+      },
+      "name": "Điều khiển PTZ"
     },
     "rediscover": {
-      "name": "Dò lại camera HiEasy",
       "description": "Làm mới cloud, chạy lại WS-Discovery và quét LAN có giới hạn.",
       "fields": {
         "config_entry_id": {
-          "name": "Config entry",
-          "description": "Để trống để dò lại tất cả tài khoản HiEasy."
+          "description": "Để trống để dò lại tất cả tài khoản HiEasy.",
+          "name": "Config entry"
         }
-      }
+      },
+      "name": "Dò lại camera HiEasy"
     },
     "send_command": {
-      "name": "Gửi lệnh CGI nội bộ",
       "description": "Gửi GET, PUT hoặc POST nâng cao tới đường dẫn CGI của camera đã được tìm trong LAN.",
       "fields": {
         "config_entry_id": {
-          "name": "Config entry",
-          "description": "Chỉ cần khi DID bị trùng."
+          "description": "Chỉ cần khi DID bị trùng.",
+          "name": "Config entry"
         },
         "did": {
-          "name": "DID",
-          "description": "DID cloud trong diagnostics."
+          "description": "DID cloud trong diagnostics.",
+          "name": "DID"
         },
         "method": {
-          "name": "Phương thức",
-          "description": "Phương thức HTTP."
+          "description": "Phương thức HTTP.",
+          "name": "Phương thức"
         },
         "path": {
-          "name": "Đường dẫn CGI",
-          "description": "Đường dẫn nội bộ bắt đầu bằng /."
+          "description": "Đường dẫn nội bộ bắt đầu bằng /.",
+          "name": "Đường dẫn CGI"
         },
         "xml": {
-          "name": "Nội dung yêu cầu",
-          "description": "XML hoặc nội dung thuần tùy chọn cho PUT/POST."
+          "description": "XML hoặc nội dung thuần tùy chọn cho PUT/POST.",
+          "name": "Nội dung yêu cầu"
         }
-      }
+      },
+      "name": "Gửi lệnh CGI nội bộ"
+    },
+    "set_osd_text": {
+      "description": "Đặt tên hiển thị trên hình, giữ nguyên cấu hình OSD khác.",
+      "fields": {
+        "channel": {
+          "description": "Số kênh camera.",
+          "name": "Kênh"
+        },
+        "config_entry_id": {
+          "description": "Chỉ cần khi DID bị trùng giữa nhiều tài khoản.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "DID cloud, xem trong diagnostics.",
+          "name": "DID"
+        },
+        "text": {
+          "description": "Chữ OSD hiển thị (tên camera).",
+          "name": "Văn bản"
+        }
+      },
+      "name": "Đặt chữ OSD"
+    },
+    "sleep_control": {
+      "description": "Cho camera pin ngủ hoặc đánh thức.",
+      "fields": {
+        "action": {
+          "description": "sleep hoặc wake.",
+          "name": "Hành động"
+        },
+        "config_entry_id": {
+          "description": "Chỉ cần khi DID bị trùng giữa nhiều tài khoản.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "DID cloud, xem trong diagnostics.",
+          "name": "DID"
+        }
+      },
+      "name": "Điều khiển ngủ"
+    },
+    "sync_time": {
+      "description": "Ghi giờ hệ thống Home Assistant vào đồng hồ camera.",
+      "fields": {
+        "config_entry_id": {
+          "description": "Chỉ cần khi DID bị trùng giữa nhiều tài khoản.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "DID cloud, xem trong diagnostics.",
+          "name": "DID"
+        }
+      },
+      "name": "Đồng bộ giờ"
     }
   }
 }

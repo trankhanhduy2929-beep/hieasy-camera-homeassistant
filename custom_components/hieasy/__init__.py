@@ -15,19 +15,31 @@ from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers import entity_registry as er
 
 from .const import (
+    ATTR_ACTION,
     ATTR_CHANNEL,
     ATTR_CONFIG_ENTRY_ID,
     ATTR_DID,
+    ATTR_DURATION,
     ATTR_METHOD,
     ATTR_PATH,
     ATTR_PRESET,
+    ATTR_TEXT,
     ATTR_XML,
     DATA_COORDINATORS,
     DOMAIN,
     PLATFORMS,
+    SERVICE_ALARM_OUTPUT,
+    SERVICE_AUDIO_ALARM_STOP,
+    SERVICE_FORCE_IFRAME,
+    SERVICE_FORMAT_SDCARD,
     SERVICE_GOTO_PRESET,
+    SERVICE_ONE_CLICK_ALARM,
+    SERVICE_PTZ_CONTROL,
     SERVICE_REDISCOVER,
     SERVICE_SEND_COMMAND,
+    SERVICE_SET_OSD_TEXT,
+    SERVICE_SLEEP_CONTROL,
+    SERVICE_SYNC_TIME,
 )
 from .coordinator import HiEasyCoordinator
 
@@ -50,6 +62,26 @@ PRESET_SCHEMA = vol.Schema(
         vol.Required(ATTR_DID): cv.string,
         vol.Required(ATTR_CHANNEL, default=1): vol.All(vol.Coerce(int), vol.Range(min=1)),
         vol.Required(ATTR_PRESET): vol.All(vol.Coerce(int), vol.Range(min=0)),
+    }
+)
+PTZ_CONTROL_SCHEMA = vol.Schema(
+    {
+        vol.Optional(ATTR_CONFIG_ENTRY_ID): cv.string,
+        vol.Required(ATTR_DID): cv.string,
+        vol.Required(ATTR_CHANNEL, default=1): vol.All(vol.Coerce(int), vol.Range(min=1)),
+        vol.Required(ATTR_ACTION): cv.string,
+        vol.Optional(ATTR_PRESET): vol.All(vol.Coerce(int), vol.Range(min=0)),
+    }
+)
+ACTION_SCHEMA = vol.Schema(
+    {
+        vol.Optional(ATTR_CONFIG_ENTRY_ID): cv.string,
+        vol.Required(ATTR_DID): cv.string,
+        vol.Optional(ATTR_CHANNEL, default=1): vol.All(vol.Coerce(int), vol.Range(min=1)),
+        vol.Optional(ATTR_ACTION): cv.string,
+        vol.Optional(ATTR_TEXT): cv.string,
+        vol.Optional(ATTR_DURATION): vol.All(vol.Coerce(int), vol.Range(min=0)),
+        vol.Optional(ATTR_PRESET): vol.All(vol.Coerce(int), vol.Range(min=0)),
     }
 )
 
@@ -109,6 +141,133 @@ async def async_setup(hass: HomeAssistant, _config: Mapping[str, Any]) -> bool:
         goto_preset,
         schema=PRESET_SCHEMA,
         supports_response=SupportsResponse.OPTIONAL,
+    )
+
+    async def ptz_control(call: ServiceCall) -> dict[str, Any]:
+        coordinator = _coordinator_for_call(hass, call)
+        action = str(call.data[ATTR_ACTION])
+        channel = int(call.data[ATTR_CHANNEL])
+        preset = call.data.get(ATTR_PRESET)
+        await _ptz_action(coordinator, call.data[ATTR_DID], channel, action, preset)
+        return {"did": call.data[ATTR_DID], "channel": channel, "action": action}
+
+    async def one_click_alarm(call: ServiceCall) -> dict[str, Any]:
+        coordinator = _coordinator_for_call(hass, call)
+        await coordinator.async_send_command(
+            call.data[ATTR_DID],
+            f"/Alarm/{call.data[ATTR_CHANNEL]}/OneClickAlarmControl",
+            "POST",
+            "",
+        )
+        return {"did": call.data[ATTR_DID]}
+
+    async def audio_alarm_stop(call: ServiceCall) -> dict[str, Any]:
+        coordinator = _coordinator_for_call(hass, call)
+        await coordinator.async_send_command(
+            call.data[ATTR_DID],
+            f"/System/{call.data[ATTR_CHANNEL]}/AudioAlarmEliminate",
+            "PUT",
+            "<AudioAlarmEliminate><Enable>true</Enable></AudioAlarmEliminate>",
+        )
+        return {"did": call.data[ATTR_DID]}
+
+    async def alarm_output(call: ServiceCall) -> dict[str, Any]:
+        coordinator = _coordinator_for_call(hass, call)
+        action = str(call.data.get(ATTR_ACTION, "on")).lower()
+        channel = int(call.data[ATTR_CHANNEL])
+        await coordinator.async_send_command(
+            call.data[ATTR_DID],
+            f"/System/{channel}/RemoteAlarmoutControl/{action}",
+            "PUT",
+            "",
+        )
+        return {"did": call.data[ATTR_DID], "action": action}
+
+    async def sleep_control(call: ServiceCall) -> dict[str, Any]:
+        coordinator = _coordinator_for_call(hass, call)
+        action = str(call.data.get(ATTR_ACTION, "sleep")).lower()
+        value = "1" if action in {"sleep", "1", "on"} else "0"
+        await coordinator.async_send_command(
+            call.data[ATTR_DID],
+            "/System/DeviceSleepControl",
+            "PUT",
+            f"<DeviceSleepControl><SleepControl>{value}</SleepControl></DeviceSleepControl>",
+        )
+        return {"did": call.data[ATTR_DID], "action": action}
+
+    async def format_sdcard(call: ServiceCall) -> dict[str, Any]:
+        coordinator = _coordinator_for_call(hass, call)
+        await coordinator.async_send_command(
+            call.data[ATTR_DID], "/Record/Format/Call", "PUT", ""
+        )
+        return {"did": call.data[ATTR_DID]}
+
+    async def force_iframe(call: ServiceCall) -> dict[str, Any]:
+        coordinator = _coordinator_for_call(hass, call)
+        await coordinator.async_send_command(
+            call.data[ATTR_DID],
+            f"/System/{call.data[ATTR_CHANNEL]}/RemoteForceIFrame",
+            "PUT",
+            "",
+        )
+        return {"did": call.data[ATTR_DID]}
+
+    async def sync_time(call: ServiceCall) -> dict[str, Any]:
+        coordinator = _coordinator_for_call(hass, call)
+        await coordinator.async_sync_time(call.data[ATTR_DID])
+        return {"did": call.data[ATTR_DID]}
+
+    async def set_osd_text(call: ServiceCall) -> dict[str, Any]:
+        coordinator = _coordinator_for_call(hass, call)
+        channel = int(call.data[ATTR_CHANNEL])
+        text = str(call.data[ATTR_TEXT])
+        path = f"/Pictures/{channel}/OSD"
+        runtime = coordinator.runtime_for_did(call.data[ATTR_DID])
+        old_xml = runtime.lan.xml.get(path, "") if runtime.lan else ""
+        if not old_xml:
+            old_xml = (
+                "<OSD><DisplayName><Enable>true</Enable>"
+                "<Name></Name></DisplayName></OSD>"
+            )
+        new_xml = _set_osd_name(old_xml, text)
+        await coordinator.async_send_command(call.data[ATTR_DID], path, "PUT", new_xml)
+        return {"did": call.data[ATTR_DID], "channel": channel}
+
+    hass.services.async_register(
+        DOMAIN, SERVICE_PTZ_CONTROL, ptz_control,
+        schema=PTZ_CONTROL_SCHEMA, supports_response=SupportsResponse.OPTIONAL,
+    )
+    hass.services.async_register(
+        DOMAIN, SERVICE_ONE_CLICK_ALARM, one_click_alarm,
+        schema=ACTION_SCHEMA, supports_response=SupportsResponse.OPTIONAL,
+    )
+    hass.services.async_register(
+        DOMAIN, SERVICE_AUDIO_ALARM_STOP, audio_alarm_stop,
+        schema=ACTION_SCHEMA, supports_response=SupportsResponse.OPTIONAL,
+    )
+    hass.services.async_register(
+        DOMAIN, SERVICE_ALARM_OUTPUT, alarm_output,
+        schema=ACTION_SCHEMA, supports_response=SupportsResponse.OPTIONAL,
+    )
+    hass.services.async_register(
+        DOMAIN, SERVICE_SLEEP_CONTROL, sleep_control,
+        schema=ACTION_SCHEMA, supports_response=SupportsResponse.OPTIONAL,
+    )
+    hass.services.async_register(
+        DOMAIN, SERVICE_FORMAT_SDCARD, format_sdcard,
+        schema=ACTION_SCHEMA, supports_response=SupportsResponse.OPTIONAL,
+    )
+    hass.services.async_register(
+        DOMAIN, SERVICE_FORCE_IFRAME, force_iframe,
+        schema=ACTION_SCHEMA, supports_response=SupportsResponse.OPTIONAL,
+    )
+    hass.services.async_register(
+        DOMAIN, SERVICE_SYNC_TIME, sync_time,
+        schema=ACTION_SCHEMA, supports_response=SupportsResponse.OPTIONAL,
+    )
+    hass.services.async_register(
+        DOMAIN, SERVICE_SET_OSD_TEXT, set_osd_text,
+        schema=ACTION_SCHEMA, supports_response=SupportsResponse.OPTIONAL,
     )
     domain_data["services_registered"] = True
     return True
@@ -195,3 +354,79 @@ async def _gather(*awaitables) -> None:
 
     if awaitables:
         await asyncio.gather(*awaitables)
+
+
+async def _ptz_action(
+    coordinator: HiEasyCoordinator,
+    did: str,
+    channel: int,
+    action: str,
+    preset: int | None,
+) -> None:
+    """Run a PTZ sub-action using the APK command payloads."""
+    normalized = action.strip().lower().replace("-", "_")
+    param = f"Param1={preset}" if preset is not None else "Param1=1"
+    mapping = {
+        "preset_set": (f"/PTZ/{channel}/Presets/Set", param),
+        "preset_remove": (f"/PTZ/{channel}/Presets/Remove", param),
+        "ptz_reset": (f"/PTZ/{channel}/PTZReset", ""),
+        "lens_reset": (f"/PTZ/{channel}/CameraLensReset", ""),
+        "calibration": (f"/PTZ/{channel}/Calibration", ""),
+        "cruise_start": (f"/PTZ/{channel}/Cruise/StartCruise", "Param1=1"),
+        "cruise_stop": (f"/PTZ/{channel}/Cruise/StopCruise", "Param1=1"),
+        "cruise_track_start": (f"/PTZ/{channel}/Cruise/CruiseTrackStart", "Param1=1"),
+        "cruise_track_stop": (f"/PTZ/{channel}/Cruise/CruiseTrackStop", "Param1=1"),
+        "human_track_start": (f"/PTZ/{channel}/HumanTrack/StartHumanTrack", "Param1=1"),
+        "human_track_stop": (f"/PTZ/{channel}/HumanTrack/StopHumanTrack", "Param1=1"),
+        "range_scan_start": (f"/PTZ/{channel}/RangeScan/StartRangeScan", "Param1=1"),
+        "range_scan_stop": (f"/PTZ/{channel}/RangeScan/StopRangeScan", "Param1=1"),
+        "range_scan_left": (f"/PTZ/{channel}/RangeScan/RangeScanSetLeftBoundary", "Param1=1"),
+        "range_scan_right": (f"/PTZ/{channel}/RangeScan/RangeScanSetRightBoundary", "Param1=1"),
+        "range_scan360_start": (f"/PTZ/{channel}/RangeScan/StartRangeScan360", "Param1=1"),
+        "range_scan360_stop": (f"/PTZ/{channel}/RangeScan/StopRangeScan360", "Param1=1"),
+        "track_start": (f"/PTZ/{channel}/Track/StartTrack", "Param1=1"),
+        "track_stop": (f"/PTZ/{channel}/Track/StopTrack", "Param1=1"),
+        "track_mem_start": (f"/PTZ/{channel}/Track/StartTrackMem", "Param1=1"),
+        "track_mem_stop": (f"/PTZ/{channel}/Track/StopTrackMem", "Param1=1"),
+        "watch_start": (f"/PTZ/{channel}/Watch/StartWatch", param),
+        "watch_stop": (f"/PTZ/{channel}/Watch/StopWatch", param),
+        "watch_care_goto": ("/PTZ/1/WatchCareGoto", "Param1=1"),
+        "wiper": (f"/PTZ/{channel}/RainBrush", "Param1=1"),
+        "heater": (f"/PTZ/{channel}/Hearter", "Param1=1"),
+    }
+    target = mapping.get(normalized)
+    if target is None:
+        raise ServiceValidationError(
+            f"PTZ action không hỗ trợ: {action}. Hỗ trợ: {sorted(mapping)}"
+        )
+    await coordinator.async_send_command(did, target[0], "PUT", target[1])
+
+
+def _set_osd_name(xml_text: str, name: str) -> str:
+    """Replace the OSD DisplayName/Name value in an OSD XML body."""
+    import re
+    import xml.sax.saxutils
+
+    escaped = xml.sax.saxutils.escape(name)
+    if "<Name>" in xml_text or "<Name " in xml_text:
+        return re.sub(
+            r"<Name([^>]*)>.*?</Name>",
+            f"<Name\\1>{escaped}</Name>",
+            xml_text,
+            count=1,
+            flags=re.DOTALL,
+        )
+    if "<DisplayName>" in xml_text:
+        return xml_text.replace(
+            "<DisplayName>", f"<DisplayName><Name>{escaped}</Name>", 1
+        )
+    if "</OSD>" in xml_text:
+        return xml_text.replace(
+            "</OSD>",
+            f"<DisplayName><Enable>true</Enable><Name>{escaped}</Name></DisplayName></OSD>",
+            1,
+        )
+    return (
+        f"<OSD><DisplayName><Enable>true</Enable><Name>{escaped}</Name>"
+        "</DisplayName></OSD>"
+    )

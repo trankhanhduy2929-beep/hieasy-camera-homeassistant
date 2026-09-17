@@ -21,14 +21,102 @@ from .const import (
     DEFAULT_RTSP_PORTS,
     DEFAULT_SCAN_PORTS,
     DEFAULT_SCAN_TIMEOUT,
+    ENDPOINT_4G_CARD,
+    ENDPOINT_AI_CAP,
+    ENDPOINT_AIR_QUALITY,
     ENDPOINT_ALARM_OUT,
+    ENDPOINT_ALARM_OUT_STATE,
+    ENDPOINT_ALARM_OVERLAY,
+    ENDPOINT_ALARM_SCHEDULE,
+    ENDPOINT_ANIMAL_DETECT,
+    ENDPOINT_ARI_DECT,
+    ENDPOINT_ASSISTANT_IF,
+    ENDPOINT_ATMOSPHERE_LIGHT,
+    ENDPOINT_AUDIO_ALARM,
+    ENDPOINT_AUDIO_ALARM_V1,
+    ENDPOINT_AUDIO_STREAM,
+    ENDPOINT_BIND_CONFIG,
+    ENDPOINT_CAR_DETECT,
+    ENDPOINT_CAR_PLATE,
+    ENDPOINT_CLOUD_ERRORS,
+    ENDPOINT_CLOUD_RECORD_CFG,
+    ENDPOINT_CLOUD_RECORD_PLAN,
+    ENDPOINT_CLOUD_STORAGE_MODE,
+    ENDPOINT_CLOUD_STORAGE_STATUS,
+    ENDPOINT_CROSS_BORDER,
+    ENDPOINT_CROSS_BORDER_CH,
+    ENDPOINT_CRUISE_TIMESLOT,
+    ENDPOINT_CRY_DETECT,
+    ENDPOINT_DEVICE_CAP,
     ENDPOINT_DEVICE_INFO,
+    ENDPOINT_DIGITAL_ZOOM,
+    ENDPOINT_DISK,
+    ENDPOINT_DND,
+    ENDPOINT_EBIKE_DETECT,
+    ENDPOINT_ELECTRONIC_FENCE,
+    ENDPOINT_EMAIL,
+    ENDPOINT_FACE_DETECT,
+    ENDPOINT_FACE_RECO_BASE,
+    ENDPOINT_FACE_RECO_RULES,
+    ENDPOINT_FACE_REGION,
+    ENDPOINT_FACE_SNAPSHOT,
+    ENDPOINT_FIRE_DETECT,
+    ENDPOINT_FIRE_DETECT_EX,
+    ENDPOINT_FTP,
+    ENDPOINT_IMAGE_BASIC,
     ENDPOINT_INDICATOR,
+    ENDPOINT_INTELLIGENT_TRACK,
+    ENDPOINT_INTELLIGENT_TRACK_CH,
+    ENDPOINT_INTERCOM_MODE,
+    ENDPOINT_IRCUT,
+    ENDPOINT_IRCUT_EX,
+    ENDPOINT_LIGHT_CAP,
     ENDPOINT_LIGHT_CONTROL,
+    ENDPOINT_LIGHT_WARNING,
+    ENDPOINT_LP_SURVEILLANCE,
+    ENDPOINT_MOTION,
+    ENDPOINT_MOVE_TRACK,
+    ENDPOINT_MP_SERVER,
+    ENDPOINT_MULTI_OSD,
     ENDPOINT_NETWORK_PORT,
+    ENDPOINT_NIGHT_LED,
     ENDPOINT_NIGHT_VISION,
+    ENDPOINT_NTP,
+    ENDPOINT_OFF_DUTY,
+    ENDPOINT_ONE_BUTTON_CALL_CFG,
+    ENDPOINT_ONE_CLICK_ALARM_CFG,
+    ENDPOINT_ONE_CLICK_ALARM_STATUS,
+    ENDPOINT_OSD,
+    ENDPOINT_P2PV2,
+    ENDPOINT_PASSENGER_FLOW,
+    ENDPOINT_PASSENGER_FLOW_EX,
+    ENDPOINT_PEOPLE_DETECT,
+    ENDPOINT_PEOPLE_DETECT_V1,
+    ENDPOINT_PEOPLE_STATS,
+    ENDPOINT_PIR,
+    ENDPOINT_POLYGON_CONFIG,
+    ENDPOINT_POLYGON_SCHEDULE,
+    ENDPOINT_POWER_CONFIG,
+    ENDPOINT_POWER_MANAGE,
+    ENDPOINT_PTZ_CALIBRATION_CFG,
     ENDPOINT_PTZ_CAP,
+    ENDPOINT_PTZ_CONFIG,
+    ENDPOINT_PUSH_INTERVAL,
+    ENDPOINT_RADAR,
+    ENDPOINT_RECORD_SCHEDULE,
     ENDPOINT_RUNNING_INFO,
+    ENDPOINT_SIM_INFO,
+    ENDPOINT_SLEEP_INFO,
+    ENDPOINT_STREAM_CAP,
+    ENDPOINT_TIME,
+    ENDPOINT_TRACK_TIMESLOT,
+    ENDPOINT_TRAFFIC_STATS,
+    ENDPOINT_VOICE_LIGHT_CONFIG,
+    ENDPOINT_VOICE_LIGHT_STATE,
+    ENDPOINT_WATCH_CARE_ATTR,
+    ENDPOINT_WATCH_CARE_PRESET,
+    ENDPOINT_WHITE_LIGHT,
+    ENDPOINT_WIFI_CONFIG,
     STREAM_MAIN,
     STREAM_SUB,
     STREAM_THIRD,
@@ -721,21 +809,78 @@ async def _async_fetch_local_state(
     max_channels: int,
 ) -> None:
     """Fetch common settings and all practical stream profiles."""
-    optional_paths = (
+    channels = min(max(device.channel_count, 1), max_channels)
+
+    device_paths = (
         ENDPOINT_RUNNING_INFO,
         ENDPOINT_INDICATOR,
         ENDPOINT_NIGHT_VISION,
         ENDPOINT_LIGHT_CONTROL,
         ENDPOINT_PTZ_CAP,
         ENDPOINT_ALARM_OUT,
+        ENDPOINT_DEVICE_CAP,
+        ENDPOINT_AI_CAP,
+        ENDPOINT_LIGHT_CAP,
+        ENDPOINT_WHITE_LIGHT,
+        ENDPOINT_NIGHT_LED,
+        ENDPOINT_ATMOSPHERE_LIGHT,
+        ENDPOINT_AUDIO_STREAM,
+        ENDPOINT_AUDIO_ALARM,
+        ENDPOINT_AUDIO_ALARM_V1,
+        ENDPOINT_VOICE_LIGHT_STATE,
+        ENDPOINT_ALARM_OUT_STATE,
+        ENDPOINT_ALARM_OVERLAY,
+        ENDPOINT_ASSISTANT_IF,
+        ENDPOINT_ARI_DECT,
+        ENDPOINT_DND,
+        ENDPOINT_SLEEP_INFO,
+        ENDPOINT_POWER_CONFIG,
+        ENDPOINT_POWER_MANAGE,
+        ENDPOINT_DIGITAL_ZOOM,
+        ENDPOINT_INTERCOM_MODE,
+        ENDPOINT_TIME,
+        ENDPOINT_NTP,
+        ENDPOINT_DISK,
+        ENDPOINT_EMAIL,
+        ENDPOINT_FTP,
+        ENDPOINT_P2PV2,
+        ENDPOINT_4G_CARD,
+        ENDPOINT_SIM_INFO,
+        ENDPOINT_WIFI_CONFIG,
+        ENDPOINT_ONE_BUTTON_CALL_CFG,
+        ENDPOINT_BIND_CONFIG,
+        ENDPOINT_MP_SERVER,
+        ENDPOINT_CLOUD_ERRORS,
+        ENDPOINT_CLOUD_STORAGE_STATUS,
+        ENDPOINT_CLOUD_STORAGE_MODE,
+        ENDPOINT_CLOUD_RECORD_CFG,
+        ENDPOINT_CLOUD_RECORD_PLAN,
+        ENDPOINT_CRY_DETECT,
+        ENDPOINT_INTELLIGENT_TRACK,
+        ENDPOINT_FACE_SNAPSHOT,
+        ENDPOINT_CAR_PLATE,
+        ENDPOINT_FIRE_DETECT,
+        ENDPOINT_FIRE_DETECT_EX,
+        ENDPOINT_EBIKE_DETECT,
+        ENDPOINT_CROSS_BORDER,
+        ENDPOINT_OFF_DUTY,
+        ENDPOINT_ELECTRONIC_FENCE,
+        ENDPOINT_PEOPLE_STATS,
+        ENDPOINT_PASSENGER_FLOW,
+        ENDPOINT_PASSENGER_FLOW_EX,
+        ENDPOINT_TRAFFIC_STATS,
+        ENDPOINT_AIR_QUALITY,
+        ENDPOINT_LP_SURVEILLANCE,
+        ENDPOINT_PTZ_CALIBRATION_CFG,
     )
+
     async def get_optional(path: str) -> tuple[str, str] | None:
         try:
             return path, await client.async_get_xml(path)
         except LanError:
             return None
 
-    optional_results = await asyncio.gather(*(get_optional(path) for path in optional_paths))
+    optional_results = await asyncio.gather(*(get_optional(path) for path in device_paths))
     for result in optional_results:
         if result is None:
             continue
@@ -749,18 +894,57 @@ async def _async_fetch_local_state(
             support = flattened.get("support")
             connection.supports_ptz = str(support).lower() in {"true", "1", "yes"}
 
-    channels = min(max(device.channel_count, 1), max_channels)
+    channel_templates = (
+        ENDPOINT_MOVE_TRACK,
+        ENDPOINT_MOTION,
+        ENDPOINT_PIR,
+        ENDPOINT_RADAR,
+        ENDPOINT_PEOPLE_DETECT,
+        ENDPOINT_PEOPLE_DETECT_V1,
+        ENDPOINT_CAR_DETECT,
+        ENDPOINT_ANIMAL_DETECT,
+        ENDPOINT_FACE_DETECT,
+        ENDPOINT_FACE_REGION,
+        ENDPOINT_INTELLIGENT_TRACK_CH,
+        ENDPOINT_CROSS_BORDER_CH,
+        ENDPOINT_OSD,
+        ENDPOINT_MULTI_OSD,
+        ENDPOINT_IMAGE_BASIC,
+        ENDPOINT_IRCUT,
+        ENDPOINT_IRCUT_EX,
+        ENDPOINT_ALARM_SCHEDULE,
+        ENDPOINT_LIGHT_WARNING,
+        ENDPOINT_VOICE_LIGHT_CONFIG,
+        ENDPOINT_ONE_CLICK_ALARM_CFG,
+        ENDPOINT_ONE_CLICK_ALARM_STATUS,
+        ENDPOINT_POLYGON_CONFIG,
+        ENDPOINT_POLYGON_SCHEDULE,
+        ENDPOINT_PUSH_INTERVAL,
+        ENDPOINT_RECORD_SCHEDULE,
+        ENDPOINT_PTZ_CONFIG,
+        ENDPOINT_CRUISE_TIMESLOT,
+        ENDPOINT_TRACK_TIMESLOT,
+        ENDPOINT_WATCH_CARE_PRESET,
+        ENDPOINT_WATCH_CARE_ATTR,
+        ENDPOINT_FACE_RECO_BASE,
+        ENDPOINT_FACE_RECO_RULES,
+        ENDPOINT_STREAM_CAP,
+    )
+
     for channel in range(1, channels + 1):
-        try:
-            motion_xml = await client.async_get_xml(f"/Pictures/{channel}/MoveTrack")
-        except LanError:
-            motion_xml = ""
-        if motion_xml:
-            path = f"/Pictures/{channel}/MoveTrack"
-            connection.xml[path] = motion_xml
+        channel_paths = [tpl.format(channel=channel) for tpl in channel_templates]
+        channel_results = await asyncio.gather(
+            *(get_optional(path) for path in channel_paths)
+        )
+        for result in channel_results:
+            if result is None:
+                continue
+            path, xml_text = result
+            connection.xml[path] = xml_text
             connection.values.update(
-                {f"{path}:{key}": value for key, value in flatten_xml(motion_xml).items()}
+                {f"{path}:{key}": value for key, value in flatten_xml(xml_text).items()}
             )
+
         for stream in (STREAM_MAIN, STREAM_SUB, STREAM_THIRD):
             path = f"/Streams/{channel}/{stream}"
             try:

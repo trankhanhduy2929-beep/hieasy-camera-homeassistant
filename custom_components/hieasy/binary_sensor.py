@@ -15,9 +15,77 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
+from .const import (
+    ENDPOINT_ALARM_OUT_STATE,
+    ENDPOINT_CLOUD_STORAGE_STATUS,
+    ENDPOINT_DISK,
+    ENDPOINT_POWER_CONFIG,
+    ENDPOINT_SIM_INFO,
+    ENDPOINT_SLEEP_INFO,
+    ENDPOINT_VOICE_LIGHT_STATE,
+)
 from .entity import HiEasyEntity, xml_value
 from .models import DeviceRuntime
 from .protocol import parse_bool
+
+
+@dataclass(frozen=True, kw_only=True)
+class HiEasyXmlBinaryDescription(BinarySensorEntityDescription):
+    """Describe a read-only XML binary state."""
+
+    path: str
+    aliases: tuple[str, ...]
+    channel: int | None = None
+
+
+XML_BINARY_SENSORS: tuple[HiEasyXmlBinaryDescription, ...] = (
+    HiEasyXmlBinaryDescription(
+        key="sleeping",
+        translation_key="sleeping",
+        path=ENDPOINT_SLEEP_INFO,
+        aliases=("SleepStatus",),
+    ),
+    HiEasyXmlBinaryDescription(
+        key="alarm_out_state",
+        translation_key="alarm_out_state",
+        path=ENDPOINT_ALARM_OUT_STATE,
+        aliases=("State",),
+        device_class=BinarySensorDeviceClass.PROBLEM,
+    ),
+    HiEasyXmlBinaryDescription(
+        key="voice_light_active",
+        translation_key="voice_light_active",
+        path=ENDPOINT_VOICE_LIGHT_STATE,
+        aliases=("State",),
+        device_class=BinarySensorDeviceClass.SOUND,
+    ),
+    HiEasyXmlBinaryDescription(
+        key="sdcard_present",
+        translation_key="sdcard_present",
+        path=ENDPOINT_DISK,
+        aliases=("DiskStorageType", "TotalCapacity"),
+        device_class=BinarySensorDeviceClass.CONNECTIVITY,
+    ),
+    HiEasyXmlBinaryDescription(
+        key="sim_present",
+        translation_key="sim_present",
+        path=ENDPOINT_SIM_INFO,
+        aliases=("IsInUse", "ICCID"),
+    ),
+    HiEasyXmlBinaryDescription(
+        key="low_battery",
+        translation_key="low_battery",
+        path=ENDPOINT_POWER_CONFIG,
+        aliases=("LowBatteryAlarmSwitch",),
+        device_class=BinarySensorDeviceClass.BATTERY,
+    ),
+    HiEasyXmlBinaryDescription(
+        key="cloud_recording",
+        translation_key="cloud_recording",
+        path=ENDPOINT_CLOUD_STORAGE_STATUS,
+        aliases=("EnableStatus", "Enable"),
+    ),
+)
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -73,6 +141,14 @@ async def async_setup_entry(
             )
             for channel in range(1, min(runtime.cloud.channel_count, 8) + 1)
         )
+        entities.extend(
+            HiEasyXmlBinarySensor(
+                coordinator,
+                runtime.cloud.did,
+                description,
+            )
+            for description in XML_BINARY_SENSORS
+        )
     async_add_entities(entities)
 
 
@@ -126,16 +202,49 @@ class HiEasyMotionEnabledSensor(HiEasyEntity, BinarySensorEntity):
         )
         return parse_bool(value)
 
+
+class HiEasyXmlBinarySensor(HiEasyEntity, BinarySensorEntity):
+    """Represent a read-only binary state read from device XML."""
+
+    _attr_entity_category = EntityCategory.DIAGNOSTIC
+    entity_description: HiEasyXmlBinaryDescription
+
+    def __init__(
+        self,
+        coordinator,
+        did: str,
+        description: HiEasyXmlBinaryDescription,
+    ) -> None:
+        """Initialize the binary sensor."""
+        super().__init__(coordinator, did, description.key)
+        self.entity_description = description
+
+    @property
+    def is_on(self) -> bool | None:
+        """Return the parsed state."""
+        value = xml_value(
+            self.runtime,
+            self.entity_description.path,
+            *self.entity_description.aliases,
+        )
+        if value is None:
+            return None
+        if self.entity_description.key == "sdcard_present":
+            try:
+                return float(str(value)) > 0
+            except (TypeError, ValueError):
+                return parse_bool(value)
+        return parse_bool(value)
+
     @property
     def available(self) -> bool:
-        """Require the setting endpoint to have answered."""
+        """Require the endpoint to have answered."""
         runtime = self.runtime
-        path = f"/Pictures/{self.channel}/MoveTrack"
         return (
             super().available
             and runtime is not None
             and runtime.lan is not None
             and runtime.lan.online
-            and path in runtime.lan.xml
+            and self.entity_description.path in runtime.lan.xml
         )
 

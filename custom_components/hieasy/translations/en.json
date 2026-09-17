@@ -39,6 +39,397 @@
       }
     }
   },
+  "entity": {
+    "binary_sensor": {
+      "alarm_out_state": {
+        "name": "Alarm output active"
+      },
+      "cloud_recording": {
+        "name": "Cloud recording"
+      },
+      "local_connection": {
+        "name": "Local connection"
+      },
+      "low_battery": {
+        "name": "Low battery"
+      },
+      "motion_enabled": {
+        "name": "Channel {channel} motion enabled"
+      },
+      "online": {
+        "name": "Online"
+      },
+      "ptz_supported": {
+        "name": "PTZ supported"
+      },
+      "sdcard_present": {
+        "name": "SD card present"
+      },
+      "sim_present": {
+        "name": "SIM present"
+      },
+      "sleeping": {
+        "name": "Sleeping"
+      },
+      "voice_light_active": {
+        "name": "Siren/light active"
+      }
+    },
+    "button": {
+      "audio_alarm_stop": {
+        "name": "Stop audio alarm"
+      },
+      "cruise_start": {
+        "name": "Channel {channel} start cruise"
+      },
+      "cruise_stop": {
+        "name": "Channel {channel} stop cruise"
+      },
+      "cruise_track_start": {
+        "name": "Channel {channel} start cruise track"
+      },
+      "cruise_track_stop": {
+        "name": "Channel {channel} stop cruise track"
+      },
+      "force_iframe": {
+        "name": "Force keyframe"
+      },
+      "format_sdcard": {
+        "name": "Format SD card"
+      },
+      "heater": {
+        "name": "Channel {channel} defog heater"
+      },
+      "human_track_start": {
+        "name": "Channel {channel} start human tracking"
+      },
+      "human_track_stop": {
+        "name": "Channel {channel} stop human tracking"
+      },
+      "lens_reset": {
+        "name": "Channel {channel} lens reset"
+      },
+      "one_button_call": {
+        "name": "Device call button"
+      },
+      "one_click_alarm": {
+        "name": "Trigger one-click alarm"
+      },
+      "ptz_calibration": {
+        "name": "Channel {channel} PTZ calibration"
+      },
+      "ptz_reset": {
+        "name": "Channel {channel} PTZ reset"
+      },
+      "range_scan360_start": {
+        "name": "Channel {channel} start 360 scan"
+      },
+      "range_scan360_stop": {
+        "name": "Channel {channel} stop 360 scan"
+      },
+      "range_scan_start": {
+        "name": "Channel {channel} start pan scan"
+      },
+      "range_scan_stop": {
+        "name": "Channel {channel} stop pan scan"
+      },
+      "reboot": {
+        "name": "Reboot"
+      },
+      "rediscover": {
+        "name": "Rediscover LAN"
+      },
+      "sleep": {
+        "name": "Sleep"
+      },
+      "sync_time": {
+        "name": "Sync time from HA"
+      },
+      "track_start": {
+        "name": "Channel {channel} start trajectory"
+      },
+      "track_stop": {
+        "name": "Channel {channel} stop trajectory"
+      },
+      "wake": {
+        "name": "Wake"
+      },
+      "watch_care_goto": {
+        "name": "Channel {channel} go to watch-care point"
+      },
+      "wiper": {
+        "name": "Channel {channel} wiper"
+      }
+    },
+    "camera": {
+      "stream": {
+        "name": "Channel {channel} {profile} stream"
+      }
+    },
+    "number": {
+      "alarm_volume": {
+        "name": "Alarm volume"
+      },
+      "atmosphere_light_mode": {
+        "name": "Ambient light mode value"
+      },
+      "dnd_duration": {
+        "name": "Do-not-disturb duration"
+      },
+      "fill_light_brightness": {
+        "name": "Fill light brightness"
+      },
+      "image_noise_reduce": {
+        "name": "Channel {channel} noise reduction"
+      },
+      "ircut_sensitivity": {
+        "name": "Channel {channel} IR-cut sensitivity"
+      },
+      "light_brightness_idle": {
+        "name": "Light brightness (no person)"
+      },
+      "light_brightness_person": {
+        "name": "Light brightness (person)"
+      },
+      "light_warning_delay": {
+        "name": "Channel {channel} light warning delay"
+      },
+      "low_battery_percent": {
+        "name": "Low-battery threshold"
+      },
+      "mic_volume": {
+        "name": "Microphone volume"
+      },
+      "motion_sensitivity": {
+        "name": "Channel {channel} motion sensitivity"
+      },
+      "night_led_duration": {
+        "name": "Night LED duration"
+      },
+      "one_click_alarm_time": {
+        "name": "Channel {channel} one-click alarm time"
+      },
+      "people_sensitivity": {
+        "name": "Channel {channel} human sensitivity"
+      },
+      "pir_sensitivity": {
+        "name": "Channel {channel} PIR sensitivity"
+      },
+      "push_interval_motion": {
+        "name": "Channel {channel} motion push interval"
+      },
+      "push_interval_people": {
+        "name": "Channel {channel} human push interval"
+      },
+      "radar_sensitivity": {
+        "name": "Channel {channel} radar sensitivity"
+      },
+      "speaker_volume": {
+        "name": "Speaker volume"
+      },
+      "voice_light_alarm_time": {
+        "name": "Channel {channel} voice alarm time"
+      }
+    },
+    "select": {
+      "atmosphere_light_mode": {
+        "name": "Ambient light mode"
+      },
+      "flip_mode": {
+        "name": "Channel {channel} image flip"
+      },
+      "intercom_mode": {
+        "name": "Intercom mode"
+      },
+      "ircut_mode": {
+        "name": "Channel {channel} IR-cut mode"
+      },
+      "ircut_scene": {
+        "name": "Channel {channel} IR-cut scene"
+      },
+      "light_mode": {
+        "name": "Light control mode"
+      },
+      "night_vision_mode": {
+        "name": "Night vision mode"
+      },
+      "power_mode": {
+        "name": "Power work mode"
+      },
+      "ptz_protocol": {
+        "name": "Channel {channel} PTZ protocol"
+      },
+      "ptz_watch_mode": {
+        "name": "Channel {channel} PTZ watch mode"
+      },
+      "record_type": {
+        "name": "Channel {channel} record type"
+      }
+    },
+    "sensor": {
+      "air_quality": {
+        "name": "Air quality"
+      },
+      "alarm_count_today": {
+        "name": "Alarms today"
+      },
+      "awaken_duration": {
+        "name": "Awake duration"
+      },
+      "battery": {
+        "name": "Battery"
+      },
+      "battery_percent_local": {
+        "name": "Battery (local)"
+      },
+      "channel_count": {
+        "name": "Channel count"
+      },
+      "cloud_status": {
+        "name": "Cloud status"
+      },
+      "command_port": {
+        "name": "Command port"
+      },
+      "device_type": {
+        "name": "Device type"
+      },
+      "firmware": {
+        "name": "Firmware"
+      },
+      "iccid": {
+        "name": "SIM ICCID"
+      },
+      "local_ip": {
+        "name": "Local IP"
+      },
+      "mac": {
+        "name": "MAC address"
+      },
+      "media_port": {
+        "name": "Media port"
+      },
+      "model": {
+        "name": "Model"
+      },
+      "people_count_today": {
+        "name": "People detected today"
+      },
+      "power_status": {
+        "name": "Power status"
+      },
+      "power_voltage": {
+        "name": "Power voltage"
+      },
+      "preview_duration": {
+        "name": "Preview duration"
+      },
+      "sdcard_format_status": {
+        "name": "SD format status"
+      },
+      "sdcard_free": {
+        "name": "SD free space"
+      },
+      "sdcard_total": {
+        "name": "SD total space"
+      },
+      "serial": {
+        "name": "Serial number"
+      },
+      "signal": {
+        "name": "Signal"
+      },
+      "sim_operator": {
+        "name": "SIM operator"
+      },
+      "sim_signal": {
+        "name": "SIM signal"
+      },
+      "transport": {
+        "name": "Video transport"
+      },
+      "voice_light_remaining": {
+        "name": "Siren remaining time"
+      },
+      "wifi_signal": {
+        "name": "Wi-Fi signal"
+      },
+      "wifi_ssid": {
+        "name": "Wi-Fi SSID"
+      }
+    },
+    "switch": {
+      "alarm_output": {
+        "name": "Alarm output"
+      },
+      "animal_detect": {
+        "name": "Channel {channel} animal detection"
+      },
+      "ari_dect_alarm": {
+        "name": "Air detection alarm"
+      },
+      "atmosphere_light": {
+        "name": "Ambient light"
+      },
+      "car_detect": {
+        "name": "Channel {channel} vehicle detection"
+      },
+      "cry_detect": {
+        "name": "Cry/scream detection"
+      },
+      "do_not_disturb": {
+        "name": "Do not disturb"
+      },
+      "ebike_detect": {
+        "name": "E-bike detection"
+      },
+      "fire_detect": {
+        "name": "Fire detection"
+      },
+      "indicator_light": {
+        "name": "Indicator light"
+      },
+      "intelligent_track": {
+        "name": "Intelligent tracking"
+      },
+      "light_control": {
+        "name": "White light"
+      },
+      "light_warning": {
+        "name": "Channel {channel} light warning"
+      },
+      "motion": {
+        "name": "Channel {channel} motion detection"
+      },
+      "move_track": {
+        "name": "Channel {channel} motion tracking"
+      },
+      "night_led": {
+        "name": "Night LED"
+      },
+      "one_click_alarm": {
+        "name": "Channel {channel} one-click alarm"
+      },
+      "people_detect": {
+        "name": "Channel {channel} human detection"
+      },
+      "pir_detect": {
+        "name": "Channel {channel} PIR detection"
+      },
+      "radar_detect": {
+        "name": "Channel {channel} radar detection"
+      },
+      "record_schedule": {
+        "name": "Channel {channel} recording schedule"
+      },
+      "voice_light": {
+        "name": "Channel {channel} voice alarm"
+      },
+      "white_light": {
+        "name": "White light"
+      }
+    }
+  },
   "options": {
     "step": {
       "init": {
@@ -80,156 +471,234 @@
       }
     }
   },
-  "entity": {
-    "binary_sensor": {
-      "local_connection": {
-        "name": "Local connection"
-      },
-      "motion_enabled": {
-        "name": "Channel {channel} motion enabled"
-      },
-      "online": {
-        "name": "Online"
-      },
-      "ptz_supported": {
-        "name": "PTZ supported"
-      }
-    },
-    "button": {
-      "reboot": {
-        "name": "Reboot"
-      },
-      "rediscover": {
-        "name": "Rediscover LAN"
-      }
-    },
-    "camera": {
-      "stream": {
-        "name": "Channel {channel} {profile} stream"
-      }
-    },
-    "select": {
-      "night_vision_mode": {
-        "name": "Night vision mode"
-      }
-    },
-    "sensor": {
-      "battery": {
-        "name": "Battery"
-      },
-      "channel_count": {
-        "name": "Channel count"
-      },
-      "cloud_status": {
-        "name": "Cloud status"
-      },
-      "command_port": {
-        "name": "Command port"
-      },
-      "device_type": {
-        "name": "Device type"
-      },
-      "firmware": {
-        "name": "Firmware"
-      },
-      "iccid": {
-        "name": "SIM ICCID"
-      },
-      "local_ip": {
-        "name": "Local IP"
-      },
-      "mac": {
-        "name": "MAC address"
-      },
-      "media_port": {
-        "name": "Media port"
-      },
-      "model": {
-        "name": "Model"
-      },
-      "serial": {
-        "name": "Serial number"
-      },
-      "signal": {
-        "name": "Signal"
-      },
-      "transport": {
-        "name": "Video transport"
-      }
-    },
-    "switch": {
-      "alarm_output": {
-        "name": "Alarm output"
-      },
-      "indicator_light": {
-        "name": "Indicator light"
-      },
-      "light_control": {
-        "name": "White light"
-      },
-      "motion": {
-        "name": "Channel {channel} motion detection"
-      }
-    }
-  },
   "services": {
+    "alarm_output": {
+      "description": "Turn the alarm output relay on or off remotely.",
+      "fields": {
+        "action": {
+          "description": "on or off.",
+          "name": "Action"
+        },
+        "channel": {
+          "description": "Camera channel number.",
+          "name": "Channel"
+        },
+        "config_entry_id": {
+          "description": "Required only when the DID is ambiguous.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "Cloud DID shown in diagnostics.",
+          "name": "DID"
+        }
+      },
+      "name": "Remote alarm output"
+    },
+    "audio_alarm_stop": {
+      "description": "Silence the currently playing alarm sound.",
+      "fields": {
+        "channel": {
+          "description": "Camera channel number.",
+          "name": "Channel"
+        },
+        "config_entry_id": {
+          "description": "Required only when the DID is ambiguous.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "Cloud DID shown in diagnostics.",
+          "name": "DID"
+        }
+      },
+      "name": "Stop audio alarm"
+    },
+    "force_iframe": {
+      "description": "Ask the encoder to emit a keyframe immediately.",
+      "fields": {
+        "channel": {
+          "description": "Camera channel number.",
+          "name": "Channel"
+        },
+        "config_entry_id": {
+          "description": "Required only when the DID is ambiguous.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "Cloud DID shown in diagnostics.",
+          "name": "DID"
+        }
+      },
+      "name": "Force keyframe"
+    },
+    "format_sdcard": {
+      "description": "Format the camera's SD card. All recordings are erased.",
+      "fields": {
+        "config_entry_id": {
+          "description": "Required only when the DID is ambiguous.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "Cloud DID shown in diagnostics.",
+          "name": "DID"
+        }
+      },
+      "name": "Format SD card"
+    },
     "goto_preset": {
-      "name": "Go to PTZ preset",
       "description": "Move a PTZ channel to a preset using the command used by the HiEasy APK.",
       "fields": {
         "channel": {
-          "name": "Channel",
-          "description": "Camera channel number."
+          "description": "Camera channel number.",
+          "name": "Channel"
         },
         "config_entry_id": {
-          "name": "Config entry",
-          "description": "Required only when the DID is ambiguous."
+          "description": "Required only when the DID is ambiguous.",
+          "name": "Config entry"
         },
         "did": {
-          "name": "DID",
-          "description": "Cloud DID shown in diagnostics."
+          "description": "Cloud DID shown in diagnostics.",
+          "name": "DID"
         },
         "preset": {
-          "name": "Preset",
-          "description": "Preset number."
+          "description": "Preset number.",
+          "name": "Preset"
         }
-      }
+      },
+      "name": "Go to PTZ preset"
+    },
+    "one_click_alarm": {
+      "description": "Trigger the camera's combined siren/light/alarm-out action.",
+      "fields": {
+        "channel": {
+          "description": "Camera channel number.",
+          "name": "Channel"
+        },
+        "config_entry_id": {
+          "description": "Required only when the DID is ambiguous.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "Cloud DID shown in diagnostics.",
+          "name": "DID"
+        }
+      },
+      "name": "Trigger one-click alarm"
+    },
+    "ptz_control": {
+      "description": "Run a PTZ sub-action: preset set/remove, reset, lens reset, calibration, cruise, human track, pan/360 scan, trajectory, watch, wiper, heater.",
+      "fields": {
+        "action": {
+          "description": "PTZ sub-action.",
+          "name": "Action"
+        },
+        "channel": {
+          "description": "Camera channel number.",
+          "name": "Channel"
+        },
+        "config_entry_id": {
+          "description": "Required only when the DID is ambiguous.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "Cloud DID shown in diagnostics.",
+          "name": "DID"
+        },
+        "preset": {
+          "description": "Preset number for preset_set, preset_remove, watch_start or watch_stop.",
+          "name": "Preset"
+        }
+      },
+      "name": "PTZ control"
     },
     "rediscover": {
-      "name": "Rediscover HiEasy cameras",
       "description": "Refresh the cloud list, repeat WS-Discovery, and run the bounded LAN scan.",
       "fields": {
         "config_entry_id": {
-          "name": "Config entry",
-          "description": "Leave blank to rediscover all HiEasy accounts."
+          "description": "Leave blank to rediscover all HiEasy accounts.",
+          "name": "Config entry"
         }
-      }
+      },
+      "name": "Rediscover HiEasy cameras"
     },
     "send_command": {
-      "name": "Send local CGI command",
       "description": "Send an advanced GET, PUT, or POST to a discovered local HiEasy CGI path.",
       "fields": {
         "config_entry_id": {
-          "name": "Config entry",
-          "description": "Required only when the DID is ambiguous."
+          "description": "Required only when the DID is ambiguous.",
+          "name": "Config entry"
         },
         "did": {
-          "name": "DID",
-          "description": "Cloud DID shown in diagnostics."
+          "description": "Cloud DID shown in diagnostics.",
+          "name": "DID"
         },
         "method": {
-          "name": "Method",
-          "description": "HTTP method."
+          "description": "HTTP method.",
+          "name": "Method"
         },
         "path": {
-          "name": "CGI path",
-          "description": "Local path beginning with /."
+          "description": "Local path beginning with /.",
+          "name": "CGI path"
         },
         "xml": {
-          "name": "Request body",
-          "description": "Optional XML or plain body for PUT/POST."
+          "description": "Optional XML or plain body for PUT/POST.",
+          "name": "Request body"
         }
-      }
+      },
+      "name": "Send local CGI command"
+    },
+    "set_osd_text": {
+      "description": "Set the on-screen camera name while keeping other OSD settings.",
+      "fields": {
+        "channel": {
+          "description": "Camera channel number.",
+          "name": "Channel"
+        },
+        "config_entry_id": {
+          "description": "Required only when the DID is ambiguous.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "Cloud DID shown in diagnostics.",
+          "name": "DID"
+        },
+        "text": {
+          "description": "OSD overlay text (camera name).",
+          "name": "Text"
+        }
+      },
+      "name": "Set OSD text"
+    },
+    "sleep_control": {
+      "description": "Put a battery camera to sleep or wake it.",
+      "fields": {
+        "action": {
+          "description": "sleep or wake.",
+          "name": "Action"
+        },
+        "config_entry_id": {
+          "description": "Required only when the DID is ambiguous.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "Cloud DID shown in diagnostics.",
+          "name": "DID"
+        }
+      },
+      "name": "Sleep control"
+    },
+    "sync_time": {
+      "description": "Write the Home Assistant host time into the camera system clock.",
+      "fields": {
+        "config_entry_id": {
+          "description": "Required only when the DID is ambiguous.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "Cloud DID shown in diagnostics.",
+          "name": "DID"
+        }
+      },
+      "name": "Sync time"
     }
   }
 }

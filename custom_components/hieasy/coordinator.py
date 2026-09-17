@@ -363,6 +363,19 @@ class HiEasyCoordinator(
             f"Param1={preset}",
         )
 
+    async def async_sync_time(self, did: str) -> None:
+        """Push the Home Assistant host time to the camera's system clock."""
+        runtime = self.runtime_for_did(did)
+        now = dt_util.now()
+        body = (
+            "<Time>"
+            f"<SystemTime>{now.strftime('%Y-%m-%d %H:%M:%S')}</SystemTime>"
+            "<SyncNTPFlag>false</SyncNTPFlag>"
+            "</Time>"
+        )
+        client = client_for_runtime(self.session, runtime, timeout=5.0)
+        await client.async_put_xml("/System/Time", body)
+
     def diagnostic_data(self) -> dict[str, Any]:
         """Return non-secret coordinator metadata for diagnostics."""
         return {

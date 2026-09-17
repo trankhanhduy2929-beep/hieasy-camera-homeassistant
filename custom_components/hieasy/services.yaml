@@ -62,3 +62,207 @@ goto_preset:
           max: 255
           step: 1
           mode: box
+
+ptz_control:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: hieasy
+    did:
+      required: true
+      selector:
+        text:
+    channel:
+      required: true
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 32
+          step: 1
+          mode: box
+    action:
+      required: true
+      selector:
+        select:
+          options:
+            - preset_set
+            - preset_remove
+            - ptz_reset
+            - lens_reset
+            - calibration
+            - cruise_start
+            - cruise_stop
+            - cruise_track_start
+            - cruise_track_stop
+            - human_track_start
+            - human_track_stop
+            - range_scan_start
+            - range_scan_stop
+            - range_scan_left
+            - range_scan_right
+            - range_scan360_start
+            - range_scan360_stop
+            - track_start
+            - track_stop
+            - track_mem_start
+            - track_mem_stop
+            - watch_start
+            - watch_stop
+            - watch_care_goto
+            - wiper
+            - heater
+    preset:
+      selector:
+        number:
+          min: 0
+          max: 255
+          step: 1
+          mode: box
+
+one_click_alarm:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: hieasy
+    did:
+      required: true
+      selector:
+        text:
+    channel:
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 32
+          step: 1
+          mode: box
+
+audio_alarm_stop:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: hieasy
+    did:
+      required: true
+      selector:
+        text:
+    channel:
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 32
+          step: 1
+          mode: box
+
+alarm_output:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: hieasy
+    did:
+      required: true
+      selector:
+        text:
+    channel:
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 32
+          step: 1
+          mode: box
+    action:
+      default: "on"
+      selector:
+        select:
+          options:
+            - "on"
+            - "off"
+
+sleep_control:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: hieasy
+    did:
+      required: true
+      selector:
+        text:
+    action:
+      default: sleep
+      selector:
+        select:
+          options:
+            - sleep
+            - wake
+
+format_sdcard:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: hieasy
+    did:
+      required: true
+      selector:
+        text:
+
+force_iframe:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: hieasy
+    did:
+      required: true
+      selector:
+        text:
+    channel:
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 32
+          step: 1
+          mode: box
+
+sync_time:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: hieasy
+    did:
+      required: true
+      selector:
+        text:
+
+set_osd_text:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: hieasy
+    did:
+      required: true
+      selector:
+        text:
+    channel:
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 32
+          step: 1
+          mode: box
+    text:
+      required: true
+      selector:
+        text:
