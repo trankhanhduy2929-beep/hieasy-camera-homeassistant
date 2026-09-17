@@ -1,0 +1,235 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "Tài khoản và vùng HiEasy này đã được cấu hình."
+    },
+    "error": {
+      "api_error": "Cloud HiEasy trả về lỗi không mong đợi.",
+      "cannot_connect": "Không thể kết nối cloud HiEasy.",
+      "invalid_auth": "Sai tài khoản hoặc mật khẩu.",
+      "invalid_auth_america": "Máy chủ Châu Mỹ nhận ra tài khoản nhưng từ chối mật khẩu. Hãy đăng xuất rồi đăng nhập lại ứng dụng HiEasy để kiểm tra; nếu thường dùng mã SMS, hãy tạo hoặc đặt lại mật khẩu tài khoản.",
+      "invalid_auth_china": "Máy chủ Trung Quốc nhận ra tài khoản nhưng từ chối mật khẩu. Hãy đăng xuất rồi đăng nhập lại ứng dụng HiEasy để kiểm tra; nếu thường dùng mã SMS, hãy tạo hoặc đặt lại mật khẩu tài khoản.",
+      "invalid_auth_europe": "Máy chủ Châu Âu nhận ra tài khoản nhưng từ chối mật khẩu. Hãy đăng xuất rồi đăng nhập lại ứng dụng HiEasy để kiểm tra; nếu thường dùng mã SMS, hãy tạo hoặc đặt lại mật khẩu tài khoản.",
+      "invalid_auth_world": "Máy chủ Quốc tế / Singapore nhận ra tài khoản nhưng từ chối mật khẩu. Hãy đăng xuất rồi đăng nhập lại ứng dụng HiEasy để kiểm tra; nếu thường dùng mã SMS, hãy tạo hoặc đặt lại mật khẩu tài khoản.",
+      "invalid_auth_yl": "Máy chủ YL / Peru nhận ra tài khoản nhưng từ chối mật khẩu. Hãy đăng xuất rồi đăng nhập lại ứng dụng HiEasy để kiểm tra; nếu thường dùng mã SMS, hãy tạo hoặc đặt lại mật khẩu tài khoản.",
+      "no_devices": "Tài khoản không có camera được hỗ trợ.",
+      "unknown": "Lỗi không xác định. Hãy xem log Home Assistant."
+    },
+    "step": {
+      "reauth_confirm": {
+        "data": {
+          "password": "Mật khẩu"
+        },
+        "description": "Nhập mật khẩu mới cho {account}.",
+        "title": "Xác thực lại HiEasy"
+      },
+      "user": {
+        "data": {
+          "account": "Tài khoản HiEasy",
+          "password": "Mật khẩu",
+          "region": "Vùng cloud"
+        },
+        "data_description": {
+          "account": "Email, tên đăng nhập hoặc số điện thoại. Số Việt Nam có thể nhập dạng 0912345678, 912345678 hoặc +84912345678; tích hợp sẽ tự chuẩn hóa.",
+          "password": "Mật khẩu tài khoản HiEasy. Mật khẩu từng camera được lấy từ danh sách thiết bị của tài khoản.",
+          "region": "Tự động sẽ thử tất cả máy chủ và lưu vùng đăng nhập thành công đầu tiên."
+        },
+        "description": "Chỉ cần đăng nhập một lần. Tích hợp nhập camera từ tài khoản, tìm thiết bị trong LAN và lấy RTSP qua CGI, ONVIF hoặc probe RTSP trực tiếp có giới hạn.",
+        "title": "Kết nối tài khoản HiEasy"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "discover_lan": "Bật dò tìm LAN",
+          "lan_hosts": "IP hoặc hostname camera",
+          "lan_networks": "Mạng LAN",
+          "max_scan_hosts": "Số host quét tối đa",
+          "rtsp_paths": "Mẫu đường dẫn RTSP",
+          "rtsp_ports": "Cổng RTSP cần thử",
+          "scan_ports": "Cổng HTTP / ONVIF cần thử",
+          "scan_timeout": "Timeout mỗi yêu cầu",
+          "update_interval": "Chu kỳ cập nhật LAN"
+        },
+        "data_description": {
+          "discover_lan": "Dùng WS-Discovery và quét subnet có giới hạn khi cloud không có địa chỉ LAN.",
+          "lan_hosts": "Danh sách IP hoặc hostname camera cách nhau bằng dấu phẩy. Các địa chỉ này được thử trước khi quét subnet.",
+          "lan_networks": "Danh sách CIDR cách nhau bằng dấu phẩy, ví dụ 192.168.1.0/24. Để trống để tự suy ra mạng /24 cục bộ.",
+          "max_scan_hosts": "Giới hạn an toàn tổng số địa chỉ được quét.",
+          "rtsp_paths": "Danh sách path tương đối cách nhau bằng dấu phẩy. Hỗ trợ các biến channel, channel02, stream, subtype và profile như giá trị mặc định.",
+          "rtsp_ports": "Danh sách cổng RTSP trực tiếp, thường là 554 hoặc 8554.",
+          "scan_ports": "Danh sách cổng HTTP / ONVIF, ví dụ 80,81,8000,8080,8899.",
+          "scan_timeout": "Timeout tính bằng giây cho HTTP, ONVIF và RTSP nội bộ.",
+          "update_interval": "Khoảng thời gian làm mới trạng thái và URL luồng nội bộ."
+        },
+        "title": "Tùy chọn LAN HiEasy"
+      }
+    }
+  },
+  "selector": {
+    "region": {
+      "options": {
+        "america": "Châu Mỹ",
+        "auto": "Tự động",
+        "china": "Trung Quốc",
+        "europe": "Châu Âu",
+        "world": "Quốc tế / Singapore",
+        "yl": "YL / Peru"
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "local_connection": {
+        "name": "Kết nối nội bộ"
+      },
+      "motion_enabled": {
+        "name": "Phát hiện chuyển động kênh {channel}"
+      },
+      "online": {
+        "name": "Trực tuyến"
+      },
+      "ptz_supported": {
+        "name": "Hỗ trợ PTZ"
+      }
+    },
+    "button": {
+      "reboot": {
+        "name": "Khởi động lại"
+      },
+      "rediscover": {
+        "name": "Dò lại LAN"
+      }
+    },
+    "camera": {
+      "stream": {
+        "name": "Kênh {channel} luồng {profile}"
+      }
+    },
+    "select": {
+      "night_vision_mode": {
+        "name": "Chế độ nhìn đêm"
+      }
+    },
+    "sensor": {
+      "battery": {
+        "name": "Pin"
+      },
+      "channel_count": {
+        "name": "Số kênh"
+      },
+      "cloud_status": {
+        "name": "Trạng thái cloud"
+      },
+      "command_port": {
+        "name": "Cổng điều khiển"
+      },
+      "device_type": {
+        "name": "Loại thiết bị"
+      },
+      "firmware": {
+        "name": "Firmware"
+      },
+      "iccid": {
+        "name": "ICCID SIM"
+      },
+      "local_ip": {
+        "name": "IP nội bộ"
+      },
+      "mac": {
+        "name": "Địa chỉ MAC"
+      },
+      "media_port": {
+        "name": "Cổng media"
+      },
+      "model": {
+        "name": "Model"
+      },
+      "serial": {
+        "name": "Số serial"
+      },
+      "signal": {
+        "name": "Tín hiệu"
+      },
+      "transport": {
+        "name": "Kiểu truyền video"
+      }
+    },
+    "switch": {
+      "alarm_output": {
+        "name": "Ngõ ra báo động"
+      },
+      "indicator_light": {
+        "name": "Đèn báo trạng thái"
+      },
+      "light_control": {
+        "name": "Đèn trắng"
+      },
+      "motion": {
+        "name": "Phát hiện chuyển động kênh {channel}"
+      }
+    }
+  },
+  "services": {
+    "goto_preset": {
+      "name": "Đi tới preset PTZ",
+      "description": "Di chuyển kênh PTZ tới preset bằng đúng lệnh APK HiEasy sử dụng.",
+      "fields": {
+        "channel": {
+          "name": "Kênh",
+          "description": "Số kênh camera."
+        },
+        "config_entry_id": {
+          "name": "Config entry",
+          "description": "Chỉ cần khi DID bị trùng."
+        },
+        "did": {
+          "name": "DID",
+          "description": "DID cloud trong diagnostics."
+        },
+        "preset": {
+          "name": "Preset",
+          "description": "Số preset."
+        }
+      }
+    },
+    "rediscover": {
+      "name": "Dò lại camera HiEasy",
+      "description": "Làm mới cloud, chạy lại WS-Discovery và quét LAN có giới hạn.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Config entry",
+          "description": "Để trống để dò lại tất cả tài khoản HiEasy."
+        }
+      }
+    },
+    "send_command": {
+      "name": "Gửi lệnh CGI nội bộ",
+      "description": "Gửi GET, PUT hoặc POST nâng cao tới đường dẫn CGI của camera đã được tìm trong LAN.",
+      "fields": {
+        "config_entry_id": {
+          "name": "Config entry",
+          "description": "Chỉ cần khi DID bị trùng."
+        },
+        "did": {
+          "name": "DID",
+          "description": "DID cloud trong diagnostics."
+        },
+        "method": {
+          "name": "Phương thức",
+          "description": "Phương thức HTTP."
+        },
+        "path": {
+          "name": "Đường dẫn CGI",
+          "description": "Đường dẫn nội bộ bắt đầu bằng /."
+        },
+        "xml": {
+          "name": "Nội dung yêu cầu",
+          "description": "XML hoặc nội dung thuần tùy chọn cho PUT/POST."
+        }
+      }
+    }
+  }
+}

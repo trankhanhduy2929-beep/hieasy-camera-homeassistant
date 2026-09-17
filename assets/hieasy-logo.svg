@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 512" role="img" aria-labelledby="title desc">
+  <title id="title">HiEasy Camera Bridge</title>
+  <desc id="desc">HiEasy community integration logo with a network camera icon.</desc>
+  <defs>
+    <linearGradient id="tile" x1="72" y1="48" x2="448" y2="464" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#102653"/>
+      <stop offset="1" stop-color="#071126"/>
+    </linearGradient>
+    <linearGradient id="camera" x1="120" y1="178" x2="358" y2="344" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#41E2DF"/>
+      <stop offset="1" stop-color="#12B790"/>
+    </linearGradient>
+    <linearGradient id="lens" x1="188" y1="220" x2="266" y2="304" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#91F5FF"/>
+      <stop offset=".48" stop-color="#2FC8E8"/>
+      <stop offset="1" stop-color="#1475B8"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(24)">
+    <rect x="24" y="24" width="464" height="464" rx="112" fill="url(#tile)"/>
+    <circle cx="92" cy="112" r="9" fill="#B7F34A"/>
+    <rect x="88" y="168" width="286" height="190" rx="58" fill="url(#camera)"/>
+    <path d="M361 215 428 184c10-5 22 3 22 15v128c0 12-12 20-22 15l-67-33z" fill="#19CFA7"/>
+    <circle cx="224" cy="263" r="82" fill="#09172F"/>
+    <circle cx="224" cy="263" r="59" fill="url(#lens)"/>
+    <circle cx="224" cy="263" r="31" fill="#0A294B"/>
+    <ellipse cx="207" cy="239" rx="17" ry="12" fill="#D9FCFF" opacity=".74" transform="rotate(-28 207 239)"/>
+    <circle cx="325" cy="211" r="11" fill="#B7F34A"/>
+    <g fill="none" stroke="#83F2E4" stroke-linecap="round">
+      <path d="M326 136a72 72 0 0 1 50 21" stroke-width="16"/>
+      <path d="M326 100a108 108 0 0 1 76 32" stroke-width="14" opacity=".78"/>
+      <path d="M326 66a142 142 0 0 1 101 42" stroke-width="12" opacity=".48"/>
+    </g>
+  </g>
+  <text x="560" y="256" fill="#0B1736" font-family="Inter, DejaVu Sans, sans-serif" font-size="142" font-weight="800" letter-spacing="-7">HiEasy</text>
+  <text x="570" y="334" fill="#49667D" font-family="Inter, DejaVu Sans, sans-serif" font-size="38" font-weight="700" letter-spacing="8">CAMERA BRIDGE</text>
+  <path d="M574 382h312" fill="none" stroke="#18C7AE" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="916" cy="382" r="10" fill="#B7F34A"/>
+  <circle cx="950" cy="382" r="10" fill="#41E2DF"/>
+  <circle cx="984" cy="382" r="10" fill="#1475B8"/>
+</svg>

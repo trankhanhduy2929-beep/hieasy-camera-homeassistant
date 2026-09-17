@@ -1,0 +1,12 @@
+{
+  "domain": "hieasy",
+  "name": "HiEasy",
+  "codeowners": ["@trankhanhduy2912"],
+  "config_flow": true,
+  "dependencies": ["stream"],
+  "documentation": "https://github.com/trankhanhduy2929-beep/hieasy-camera-homeassistant",
+  "integration_type": "hub",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/trankhanhduy2929-beep/hieasy-camera-homeassistant/issues",
+  "version": "0.2.1"
+}

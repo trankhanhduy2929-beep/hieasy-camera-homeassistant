@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*.apk
+*.xapk
+.coverage
+.DS_Store
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.venv/
+build/
+dist/
+ket_qua/
+work_analysis/
+HiEasy_8.1.2.zip

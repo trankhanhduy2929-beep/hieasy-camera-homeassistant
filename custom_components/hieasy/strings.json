@@ -1,0 +1,235 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "This HiEasy account and region are already configured."
+    },
+    "error": {
+      "api_error": "The HiEasy cloud returned an unexpected error.",
+      "cannot_connect": "Cannot connect to the HiEasy cloud.",
+      "invalid_auth": "Invalid account or password.",
+      "invalid_auth_america": "The America server recognized this account but rejected the password. Verify the password by signing out and back into HiEasy; if you normally use an SMS code, create or reset the account password.",
+      "invalid_auth_china": "The China server recognized this account but rejected the password. Verify the password by signing out and back into HiEasy; if you normally use an SMS code, create or reset the account password.",
+      "invalid_auth_europe": "The Europe server recognized this account but rejected the password. Verify the password by signing out and back into HiEasy; if you normally use an SMS code, create or reset the account password.",
+      "invalid_auth_world": "The World / Singapore server recognized this account but rejected the password. Verify the password by signing out and back into HiEasy; if you normally use an SMS code, create or reset the account password.",
+      "invalid_auth_yl": "The YL / Peru server recognized this account but rejected the password. Verify the password by signing out and back into HiEasy; if you normally use an SMS code, create or reset the account password.",
+      "no_devices": "The account does not contain any supported camera.",
+      "unknown": "Unexpected error. Check the Home Assistant log."
+    },
+    "step": {
+      "reauth_confirm": {
+        "data": {
+          "password": "Password"
+        },
+        "description": "Enter the new password for {account}.",
+        "title": "Reauthenticate HiEasy"
+      },
+      "user": {
+        "data": {
+          "account": "HiEasy account",
+          "password": "Password",
+          "region": "Cloud region"
+        },
+        "data_description": {
+          "account": "Email address, username, or phone number. Vietnamese numbers may be entered as 0912345678, 912345678, or +84912345678; they are normalized automatically.",
+          "password": "The HiEasy account password. Device passwords are read from the account device list.",
+          "region": "Auto probes all server regions and stores the first successful region."
+        },
+        "description": "Sign in once. The integration imports cameras from the account, discovers them on the LAN, and obtains RTSP through vendor CGI, ONVIF, or a bounded direct RTSP probe.",
+        "title": "Connect HiEasy account"
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "discover_lan": "Enable LAN discovery",
+          "lan_hosts": "Camera IP addresses or hostnames",
+          "lan_networks": "LAN networks",
+          "max_scan_hosts": "Maximum hosts to scan",
+          "rtsp_paths": "RTSP path templates",
+          "rtsp_ports": "RTSP ports to probe",
+          "scan_ports": "HTTP / ONVIF ports to probe",
+          "scan_timeout": "Per-request timeout",
+          "update_interval": "Local polling interval"
+        },
+        "data_description": {
+          "discover_lan": "Use WS-Discovery and a bounded subnet scan when cloud metadata has no LAN address.",
+          "lan_hosts": "Optional comma-separated exact camera IP addresses or hostnames. These are tried before scanning a subnet.",
+          "lan_networks": "Optional comma-separated CIDR networks, for example 192.168.1.0/24. Leave blank to derive local /24 networks.",
+          "max_scan_hosts": "Safety limit across all configured networks.",
+          "rtsp_paths": "Comma-separated relative paths. Supports the channel, channel02, stream, subtype, and profile placeholders shown in the default value.",
+          "rtsp_ports": "Comma-separated direct RTSP ports, normally 554 or 8554.",
+          "scan_ports": "Comma-separated HTTP / ONVIF ports, for example 80,81,8000,8080,8899.",
+          "scan_timeout": "Timeout in seconds for local HTTP, ONVIF, and RTSP requests.",
+          "update_interval": "How often local status and stream URLs are refreshed."
+        },
+        "title": "HiEasy LAN options"
+      }
+    }
+  },
+  "selector": {
+    "region": {
+      "options": {
+        "america": "America",
+        "auto": "Automatic",
+        "china": "China",
+        "europe": "Europe",
+        "world": "World / Singapore",
+        "yl": "YL / Peru"
+      }
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "local_connection": {
+        "name": "Local connection"
+      },
+      "motion_enabled": {
+        "name": "Channel {channel} motion enabled"
+      },
+      "online": {
+        "name": "Online"
+      },
+      "ptz_supported": {
+        "name": "PTZ supported"
+      }
+    },
+    "button": {
+      "reboot": {
+        "name": "Reboot"
+      },
+      "rediscover": {
+        "name": "Rediscover LAN"
+      }
+    },
+    "camera": {
+      "stream": {
+        "name": "Channel {channel} {profile} stream"
+      }
+    },
+    "select": {
+      "night_vision_mode": {
+        "name": "Night vision mode"
+      }
+    },
+    "sensor": {
+      "battery": {
+        "name": "Battery"
+      },
+      "channel_count": {
+        "name": "Channel count"
+      },
+      "cloud_status": {
+        "name": "Cloud status"
+      },
+      "command_port": {
+        "name": "Command port"
+      },
+      "device_type": {
+        "name": "Device type"
+      },
+      "firmware": {
+        "name": "Firmware"
+      },
+      "iccid": {
+        "name": "SIM ICCID"
+      },
+      "local_ip": {
+        "name": "Local IP"
+      },
+      "mac": {
+        "name": "MAC address"
+      },
+      "media_port": {
+        "name": "Media port"
+      },
+      "model": {
+        "name": "Model"
+      },
+      "serial": {
+        "name": "Serial number"
+      },
+      "signal": {
+        "name": "Signal"
+      },
+      "transport": {
+        "name": "Video transport"
+      }
+    },
+    "switch": {
+      "alarm_output": {
+        "name": "Alarm output"
+      },
+      "indicator_light": {
+        "name": "Indicator light"
+      },
+      "light_control": {
+        "name": "White light"
+      },
+      "motion": {
+        "name": "Channel {channel} motion detection"
+      }
+    }
+  },
+  "services": {
+    "goto_preset": {
+      "description": "Move a PTZ channel to a preset using the command used by the HiEasy APK.",
+      "fields": {
+        "channel": {
+          "description": "Camera channel number.",
+          "name": "Channel"
+        },
+        "config_entry_id": {
+          "description": "Required only when the DID is ambiguous.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "Cloud DID shown in diagnostics.",
+          "name": "DID"
+        },
+        "preset": {
+          "description": "Preset number.",
+          "name": "Preset"
+        }
+      },
+      "name": "Go to PTZ preset"
+    },
+    "rediscover": {
+      "description": "Refresh the cloud list, repeat WS-Discovery, and run the bounded LAN scan.",
+      "fields": {
+        "config_entry_id": {
+          "description": "Leave blank to rediscover all HiEasy accounts.",
+          "name": "Config entry"
+        }
+      },
+      "name": "Rediscover HiEasy cameras"
+    },
+    "send_command": {
+      "description": "Send an advanced GET, PUT, or POST to a discovered local HiEasy CGI path.",
+      "fields": {
+        "config_entry_id": {
+          "description": "Required only when the DID is ambiguous.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "Cloud DID shown in diagnostics.",
+          "name": "DID"
+        },
+        "method": {
+          "description": "HTTP method.",
+          "name": "Method"
+        },
+        "path": {
+          "description": "Local path beginning with /.",
+          "name": "CGI path"
+        },
+        "xml": {
+          "description": "Optional XML or plain body for PUT/POST.",
+          "name": "Request body"
+        }
+      },
+      "name": "Send local CGI command"
+    }
+  }
+}

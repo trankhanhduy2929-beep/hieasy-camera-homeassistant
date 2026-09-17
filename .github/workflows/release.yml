@@ -1,0 +1,50 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate tag matches manifest version
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          VERSION="$(python -c 'import json; print(json.load(open("custom_components/hieasy/manifest.json"))["version"])')"
+          test "$RELEASE_TAG" = "v$VERSION"
+
+      - name: Build install archive
+        run: |
+          mkdir -p dist
+          cd custom_components
+          zip -r -X ../dist/hieasy.zip hieasy
+          cd ..
+          (cd dist && sha256sum hieasy.zip > SHA256SUMS.txt)
+
+      - name: Create or update GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" \
+              dist/hieasy.zip \
+              dist/SHA256SUMS.txt \
+              --clobber
+          else
+            gh release create "$RELEASE_TAG" \
+              dist/hieasy.zip \
+              dist/SHA256SUMS.txt \
+              --generate-notes \
+              --title "HiEasy $RELEASE_TAG"
+          fi

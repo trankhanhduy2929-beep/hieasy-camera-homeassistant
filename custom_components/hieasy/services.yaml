@@ -1,0 +1,64 @@
+send_command:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: hieasy
+    did:
+      required: true
+      example: "ABCDEF123456"
+      selector:
+        text:
+    method:
+      default: GET
+      selector:
+        select:
+          options:
+            - GET
+            - PUT
+            - POST
+    path:
+      required: true
+      example: "/System/DeviceInfo"
+      selector:
+        text:
+    xml:
+      example: '<IndicatorLightCfg Version="1.0"><Enable>true</Enable></IndicatorLightCfg>'
+      selector:
+        text:
+          multiline: true
+
+rediscover:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: hieasy
+
+goto_preset:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: hieasy
+    did:
+      required: true
+      selector:
+        text:
+    channel:
+      required: true
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 32
+          step: 1
+          mode: box
+    preset:
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 255
+          step: 1
+          mode: box
