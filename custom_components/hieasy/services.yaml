@@ -266,3 +266,25 @@ set_osd_text:
       required: true
       selector:
         text:
+
+wifi_scan:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: hieasy
+    did:
+      required: true
+      selector:
+        text:
+
+wifi_status:
+  fields:
+    config_entry_id:
+      selector:
+        config_entry:
+          integration: hieasy
+    did:
+      required: true
+      selector:
+        text:

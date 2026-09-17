@@ -40,6 +40,8 @@ from .const import (
     SERVICE_SET_OSD_TEXT,
     SERVICE_SLEEP_CONTROL,
     SERVICE_SYNC_TIME,
+    SERVICE_WIFI_SCAN,
+    SERVICE_WIFI_STATUS,
 )
 from .coordinator import HiEasyCoordinator
 
@@ -269,6 +271,35 @@ async def async_setup(hass: HomeAssistant, _config: Mapping[str, Any]) -> bool:
         DOMAIN, SERVICE_SET_OSD_TEXT, set_osd_text,
         schema=ACTION_SCHEMA, supports_response=SupportsResponse.OPTIONAL,
     )
+
+    async def wifi_scan(call: ServiceCall) -> dict[str, Any]:
+        coordinator = _coordinator_for_call(hass, call)
+        xml_text = await coordinator.async_send_command(
+            call.data[ATTR_DID],
+            "/Network/Interfaces/2/WIFIAccessPointList",
+            "GET",
+            None,
+        )
+        return {"did": call.data[ATTR_DID], "xml": xml_text, "aps": _parse_ap_list(xml_text)}
+
+    async def wifi_status(call: ServiceCall) -> dict[str, Any]:
+        coordinator = _coordinator_for_call(hass, call)
+        xml_text = await coordinator.async_send_command(
+            call.data[ATTR_DID],
+            "/Network/Interfaces/2/WirelessEx",
+            "GET",
+            None,
+        )
+        return {"did": call.data[ATTR_DID], "xml": xml_text, **_flatten_wireless_ex(xml_text)}
+
+    hass.services.async_register(
+        DOMAIN, SERVICE_WIFI_SCAN, wifi_scan,
+        schema=ACTION_SCHEMA, supports_response=SupportsResponse.OPTIONAL,
+    )
+    hass.services.async_register(
+        DOMAIN, SERVICE_WIFI_STATUS, wifi_status,
+        schema=ACTION_SCHEMA, supports_response=SupportsResponse.OPTIONAL,
+    )
     domain_data["services_registered"] = True
     return True
 
@@ -430,3 +461,51 @@ def _set_osd_name(xml_text: str, name: str) -> str:
         f"<OSD><DisplayName><Enable>true</Enable><Name>{escaped}</Name>"
         "</DisplayName></OSD>"
     )
+
+
+def _parse_ap_list(xml_text: str) -> list[dict[str, str]]:
+    """Parse WIFIAccessPointList XML into a list of access point dicts."""
+    import xml.etree.ElementTree as ET
+
+    try:
+        root = ET.fromstring(xml_text)
+    except ET.ParseError:
+        return []
+    aps: list[dict[str, str]] = []
+    for ap in root.iter():
+        tag = ap.tag.rsplit("}", 1)[-1]
+        if tag != "AP":
+            continue
+        entry: dict[str, str] = {}
+        for child in ap:
+            child_tag = child.tag.rsplit("}", 1)[-1]
+            entry[child_tag] = (child.text or "").strip()
+        if entry:
+            aps.append(entry)
+    return aps
+
+
+def _flatten_wireless_ex(xml_text: str) -> dict[str, Any]:
+    """Extract WifiName/WifiSignalStrength from a WirelessEx response."""
+    import xml.etree.ElementTree as ET
+
+    try:
+        root = ET.fromstring(xml_text)
+    except ET.ParseError:
+        return {}
+    out: dict[str, Any] = {}
+    for elem in root.iter():
+        tag = elem.tag.rsplit("}", 1)[-1]
+        text = (elem.text or "").strip()
+        if not text:
+            continue
+        if tag == "WifiName":
+            out["ssid"] = text
+        elif tag == "WifiSignalStrength":
+            try:
+                out["signal_strength"] = int(text)
+            except ValueError:
+                out["signal_strength"] = text
+        else:
+            out[tag] = text
+    return out

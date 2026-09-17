@@ -354,6 +354,12 @@
       "wifi_signal": {
         "name": "Wi-Fi signal"
       },
+      "wifi_signal_strength": {
+        "name": "Wi-Fi signal strength"
+      },
+      "wifi_name": {
+        "name": "Wi-Fi network name"
+      },
       "wifi_ssid": {
         "name": "Wi-Fi SSID"
       }
@@ -699,6 +705,34 @@
         }
       },
       "name": "Sync time"
+    },
+    "wifi_scan": {
+      "description": "Return the list of Wi-Fi access points the camera can see (WIFIAccessPointList).",
+      "fields": {
+        "config_entry_id": {
+          "description": "Required only when the DID is ambiguous.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "Cloud DID shown in diagnostics.",
+          "name": "DID"
+        }
+      },
+      "name": "Wi-Fi scan"
+    },
+    "wifi_status": {
+      "description": "Return the currently connected Wi-Fi network name and signal strength (WirelessEx).",
+      "fields": {
+        "config_entry_id": {
+          "description": "Required only when the DID is ambiguous.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "Cloud DID shown in diagnostics.",
+          "name": "DID"
+        }
+      },
+      "name": "Wi-Fi status"
     }
   }
 }

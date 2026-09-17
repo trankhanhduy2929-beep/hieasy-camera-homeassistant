@@ -27,6 +27,7 @@ from .const import (
     ENDPOINT_SIM_INFO,
     ENDPOINT_VOICE_LIGHT_STATE,
     ENDPOINT_WIFI_CONFIG,
+    ENDPOINT_WIFI_WIRELESS_EX,
 )
 from .entity import HiEasyEntity, xml_value
 from .models import DeviceRuntime
@@ -182,6 +183,20 @@ XML_SENSORS: tuple[HiEasyXmlSensorDescription, ...] = (
         path=ENDPOINT_WIFI_CONFIG,
         aliases=("SignalValue",),
         state_class=SensorStateClass.MEASUREMENT,
+    ),
+    HiEasyXmlSensorDescription(
+        key="wifi_signal_strength",
+        translation_key="wifi_signal_strength",
+        path=ENDPOINT_WIFI_WIRELESS_EX,
+        aliases=("WifiSignalStrength", "SignalStrength"),
+        state_class=SensorStateClass.MEASUREMENT,
+    ),
+    HiEasyXmlSensorDescription(
+        key="wifi_name",
+        translation_key="wifi_name",
+        path=ENDPOINT_WIFI_WIRELESS_EX,
+        aliases=("WifiName",),
+        entity_category=EntityCategory.DIAGNOSTIC,
     ),
     HiEasyXmlSensorDescription(
         key="sim_operator",

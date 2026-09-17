@@ -184,6 +184,21 @@ data:
   text: "Camera sân vườn"
 ```
 
+### `hieasy.wifi_scan` / `hieasy.wifi_status`
+
+```yaml
+action: hieasy.wifi_scan
+data: {did: "DID"}
+# trả về danh sách AP camera nhìn thấy: [{SSID, SignalValue, Authentication}, ...]
+
+action: hieasy.wifi_status
+data: {did: "DID"}
+# trả về {ssid, signal_strength} của mạng Wi-Fi camera đang kết nối
+```
+
+Hai sensor tự động `sensor.<device>_wifi_signal_strength` và
+`sensor.<device>_wifi_name` cũng đọc endpoint `WirelessEx` nếu camera hỗ trợ.
+
 DID có thể xem trong diagnostics hoặc thuộc tính device. Nếu có nhiều config
 entry dùng cùng DID, thêm `config_entry_id`.
 

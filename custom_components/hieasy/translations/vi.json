@@ -354,6 +354,12 @@
       "wifi_signal": {
         "name": "Sóng Wi-Fi"
       },
+      "wifi_signal_strength": {
+        "name": "Cường độ sóng Wi-Fi"
+      },
+      "wifi_name": {
+        "name": "Tên mạng Wi-Fi"
+      },
       "wifi_ssid": {
         "name": "SSID Wi-Fi"
       }
@@ -699,6 +705,34 @@
         }
       },
       "name": "Đồng bộ giờ"
+    },
+    "wifi_scan": {
+      "description": "Trả về danh sách các mạng Wi-Fi camera nhìn thấy (WIFIAccessPointList).",
+      "fields": {
+        "config_entry_id": {
+          "description": "Chỉ cần khi DID bị trùng giữa nhiều tài khoản.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "DID cloud, xem trong diagnostics.",
+          "name": "DID"
+        }
+      },
+      "name": "Quét Wi-Fi"
+    },
+    "wifi_status": {
+      "description": "Trả về tên mạng Wi-Fi đang kết nối và cường độ sóng (WirelessEx).",
+      "fields": {
+        "config_entry_id": {
+          "description": "Chỉ cần khi DID bị trùng giữa nhiều tài khoản.",
+          "name": "Config entry"
+        },
+        "did": {
+          "description": "DID cloud, xem trong diagnostics.",
+          "name": "DID"
+        }
+      },
+      "name": "Trạng thái Wi-Fi"
     }
   }
 }
