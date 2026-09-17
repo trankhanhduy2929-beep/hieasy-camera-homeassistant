@@ -1,7 +1,7 @@
 {
   "domain": "hieasy",
   "name": "HiEasy",
-  "codeowners": ["@trankhanhduy2912"],
+  "codeowners": ["@trankhanhduy2929-beep"],
   "config_flow": true,
   "dependencies": ["stream"],
   "documentation": "https://github.com/trankhanhduy2929-beep/hieasy-camera-homeassistant",
